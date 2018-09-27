@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".createAccount"
+    tools:showIn="@layout/activity_create_account">
+
+
+    <RelativeLayout
+        android:layout_width="425dp"
+        android:layout_height="788dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp">
+
+        <ImageView
+            android:id="@+id/createAccountImage"
+            android:layout_width="match_parent"
+            android:layout_height="286dp"
+            android:alpha="0.7"
+            android:src="@drawable/createaccount_image" />
+
+        <ImageButton
+            android:id="@+id/userUploadImage"
+            android:layout_width="172dp"
+            android:layout_height="101dp"
+            android:layout_above="@+id/imageUploadTxt"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="-259dp"
+            android:layout_marginStart="113dp"
+            android:src="@drawable/upload_photo_icon" />
+
+        <TextView
+            android:id="@+id/imageUploadTxt"
+            android:layout_width="161dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="259dp"
+            android:fontFamily="@font/amaranth"
+            android:text="Upload Profile Image"
+            android:textColor="#ffff"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/createAccountTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="68dp"
+            android:fontFamily="@font/amaranth"
+            android:text="Create Account"
+            android:textColor="#ffff"
+            android:textSize="40sp" />
+
+        <View
+            android:id="@+id/createAccountFill"
+            android:layout_width="wrap_content"
+            android:layout_height="441dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="38dp"
+            android:background="@drawable/gradient_color"
+            android:visibility="visible" />
+
+        <EditText
+            android:id="@+id/getName"
+            android:layout_width="319dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/createAccountFill"
+            android:layout_marginStart="37dp"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_person_outline_black_24dp"
+            android:fontFamily="@font/amaranth"
+            android:hint="Please Enter Your Full Name"
+            android:inputType="textPersonName"
+            android:textColor="#ffff"
+            android:textColorHint="#ffff" />
+
+        <EditText
+            android:id="@+id/getEmail"
+            android:layout_width="319dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/getName"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_email_black_24dp"
+            android:fontFamily="@font/amaranth"
+            android:hint="Please Enter Your Email"
+            android:inputType="textWebEmailAddress"
+            android:textColor="#ffff"
+            android:textColorHint="#ffff" />
+
+        <EditText
+            android:id="@+id/getPassword"
+            android:layout_width="317dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/getName"
+            android:layout_marginBottom="315dp"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+            android:fontFamily="@font/amaranth"
+            android:hint="Please Enter Your Desired Password"
+            android:inputType="textPassword"
+            android:textColor="#ffff"
+            android:textColorHint="#ffff" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/createAccountButton"
+            android:layout_width="308dp"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/createAccountTxt"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="109dp"
+            android:layout_marginEnd="-11dp"
+            android:background="@drawable/buttonstyle"
+            android:drawableRight="@drawable/ic_send_black_24dp"
+            android:padding="12dp"
+            android:text="Create Account"
+            android:textColor="#ffff" />
+
+
+    </RelativeLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>
+
