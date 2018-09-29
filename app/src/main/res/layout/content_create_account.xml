@@ -23,6 +23,8 @@
             android:id="@+id/createAccountImage"
             android:layout_width="match_parent"
             android:layout_height="286dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:alpha="0.7"
             android:src="@drawable/createaccount_image" />
 
@@ -42,41 +44,40 @@
         <View
             android:id="@+id/createAccountFill"
             android:layout_width="wrap_content"
-            android:layout_height="367dp"
+            android:layout_height="384dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
+            android:alpha="0.7"
             android:background="@drawable/gradient_color"
             android:visibility="visible" />
 
+
+        <ImageView
+            android:id="@+id/addIcon"
+            android:layout_width="56dp"
+            android:layout_height="53dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/getName"
+            android:alpha="0.7"
+            android:src="@drawable/add_icon" />
+
+
         <ImageButton
             android:id="@+id/userUploadImage"
-            android:layout_width="109dp"
-            android:layout_height="115dp"
+            android:layout_width="118dp"
+            android:layout_height="99dp"
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/createAccountFill"
-            android:src="@drawable/upload_photo_icon" />
-
-        <TextView
-            android:id="@+id/imageUploadTxt"
-            android:layout_width="161dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="300dp"
-            android:fontFamily="@font/amaranth"
-            android:text="Upload Profile Image"
-            android:textColor="#ffff"
-            android:textSize="14sp"
-            android:visibility="visible" />
+            android:alpha="0.7"
+            android:src="@drawable/upload_image_icon" />
 
         <EditText
             android:id="@+id/getName"
-            android:layout_width="257dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/getEmail"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="261dp"
-            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="253dp"
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_person_outline_black_24dp"
             android:fontFamily="@font/amaranth"
@@ -87,11 +88,10 @@
 
         <EditText
             android:id="@+id/getEmail"
-            android:layout_width="319dp"
+            android:layout_width="316dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="198dp"
+            android:layout_alignStart="@+id/createAccountTxt"
+            android:layout_below="@+id/addIcon"
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_email_black_24dp"
             android:fontFamily="@font/amaranth"
@@ -105,7 +105,7 @@
             android:layout_width="317dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/createAccountTxt"
             android:layout_marginBottom="144dp"
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
@@ -117,15 +117,27 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/createAccountButton"
-            android:layout_width="308dp"
+            android:layout_width="281dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="46dp"
+            android:layout_alignStart="@+id/createAccountTxt"
+            android:layout_marginBottom="88dp"
             android:background="@drawable/buttonstyle"
             android:drawableRight="@drawable/ic_send_black_24dp"
             android:padding="12dp"
             android:text="Create Account"
+            android:textColor="#ffff" />
+
+        <TextView
+            android:id="@+id/backtoLogin"
+            android:layout_width="218dp"
+            android:layout_height="49dp"
+            android:layout_alignEnd="@+id/createAccountTxt"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="29dp"
+            android:fontFamily="@font/amaranth"
+            android:gravity="center"
+            android:text="Have An Account?   Login"
             android:textColor="#ffff" />
 
 

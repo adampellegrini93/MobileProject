@@ -67,12 +67,12 @@
         <TextView
             android:id="@+id/signUp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="103dp"
             android:layout_gravity="center"
-            android:lines="4"
-            android:text="\n\n\n Don't Have an Account?      SignUp"
-            android:textColor="#ffff"
-            android:fontFamily="@font/amaranth">
+            android:fontFamily="@font/amaranth"
+            android:lines="3"
+            android:text="\n\n Don't Have an Account?      SignUp"
+            android:textColor="#ffff">
 
         </TextView>
 

@@ -24,6 +24,10 @@
         <activity
             android:name=".createAccount"
             android:label="@string/title_activity_create_account"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HomePage"
+            android:label="@string/title_activity_home_page"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //handles sign-up features
+
         signUp = (TextView)findViewById(R.id.signUp);
 
         final String createAccount = signUp.getText().toString();
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        txt.setSpan(clickTxt,32,38, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        txt.setSpan(clickTxt,31,37, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         signUp.setText(txt);
         signUp.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -47,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(signUpIntent, SIGN_UP);
             }
         });
+
+        //handles login and verification
+
+
 
 
     }
