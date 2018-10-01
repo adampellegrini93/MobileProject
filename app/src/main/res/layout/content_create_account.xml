@@ -56,8 +56,9 @@
             android:id="@+id/addIcon"
             android:layout_width="56dp"
             android:layout_height="53dp"
+            android:layout_above="@+id/createAccountFill"
             android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/getName"
+            android:layout_marginStart="104dp"
             android:alpha="0.7"
             android:src="@drawable/add_icon" />
 
@@ -67,61 +68,66 @@
             android:layout_width="118dp"
             android:layout_height="99dp"
             android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/createAccountFill"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="219dp"
             android:alpha="0.7"
-            android:src="@drawable/upload_photo_icon" />
+            android:src="@drawable/upload_image_icon" />
 
         <EditText
             android:id="@+id/getName"
-            android:layout_width="wrap_content"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/getEmail"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="253dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="258dp"
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_person_outline_black_24dp"
             android:fontFamily="@font/amaranth"
             android:hint="Please Enter Your Full Name"
             android:inputType="textPersonName"
             android:textColor="#ffff"
-            android:textColorHint="#ffff" />
+            android:textColorHint="#ffff"
+            android:textSize="14sp"/>
 
         <EditText
             android:id="@+id/getEmail"
-            android:layout_width="316dp"
+            android:layout_width="279dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/createAccountTxt"
-            android:layout_below="@+id/addIcon"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/getName"
+            android:layout_marginBottom="199dp"
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_email_black_24dp"
             android:fontFamily="@font/amaranth"
             android:hint="Please Enter Your Email"
             android:inputType="textWebEmailAddress"
             android:textColor="#ffff"
-            android:textColorHint="#ffff" />
+            android:textColorHint="#ffff"
+            android:textSize="14sp"/>
 
         <EditText
             android:id="@+id/getPassword"
-            android:layout_width="317dp"
+            android:layout_width="277dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/createAccountTxt"
-            android:layout_marginBottom="144dp"
+            android:layout_alignStart="@+id/getName"
+            android:layout_marginBottom="145dp"
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
             android:fontFamily="@font/amaranth"
             android:hint="Please Enter Your Desired Password"
             android:inputType="textPassword"
             android:textColor="#ffff"
-            android:textColorHint="#ffff" />
+            android:textColorHint="#ffff"
+            android:textSize="14sp"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/createAccountButton"
-            android:layout_width="281dp"
+            android:layout_width="259dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/createAccountTxt"
-            android:layout_marginBottom="88dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="89dp"
             android:background="@drawable/buttonstyle"
             android:drawableRight="@drawable/ic_send_black_24dp"
             android:padding="12dp"
@@ -132,9 +138,9 @@
             android:id="@+id/backtoLogin"
             android:layout_width="218dp"
             android:layout_height="49dp"
-            android:layout_alignEnd="@+id/createAccountTxt"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="29dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
             android:fontFamily="@font/amaranth"
             android:gravity="center"
             android:text="Have An Account?   Login"

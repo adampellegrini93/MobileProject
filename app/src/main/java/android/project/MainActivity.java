@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.app.ProgressDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
+
         txt.setSpan(clickTxt,31,37, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         signUp.setText(txt);
         signUp.setMovementMethod(LinkMovementMethod.getInstance());
@@ -60,9 +62,18 @@ public class MainActivity extends AppCompatActivity {
                     TextView invalidDisplay = findViewById(R.id.invalidLoginDisplay);
                     invalidDisplay.setText("Invalid Login");
                 }
+
+                final ProgressDialog loading = new ProgressDialog(MainActivity.this,
+                        R.style.progressTheme);
+                loading.setIndeterminate(true);
+                loading.setMessage("Validating...");
+                loading.show();
+
             }
         });
+
     }
+
 
     //temporarily checks login with hardcoded values until database is connected
     public boolean checkLoginInfo(){
@@ -75,5 +86,9 @@ public class MainActivity extends AppCompatActivity {
         }else{
             return false;
         }
+
+
     }
+
+
 }
