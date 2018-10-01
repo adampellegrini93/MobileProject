@@ -58,16 +58,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(checkLoginInfo()){
                     startActivity(new Intent(MainActivity.this, HomePage.class));
+
+                    final ProgressDialog loading = new ProgressDialog(MainActivity.this,
+                            R.style.progressTheme);
+                    loading.setIndeterminate(true);
+                    loading.setMessage("Validating...");
+                    loading.show();
                 }else{
                     TextView invalidDisplay = findViewById(R.id.invalidLoginDisplay);
                     invalidDisplay.setText("Invalid Login");
                 }
 
-                final ProgressDialog loading = new ProgressDialog(MainActivity.this,
-                        R.style.progressTheme);
-                loading.setIndeterminate(true);
-                loading.setMessage("Validating...");
-                loading.show();
 
             }
         });
