@@ -3,10 +3,12 @@ package android.project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+
 
 
 public class HomePage extends AppCompatActivity {
@@ -20,8 +22,8 @@ public class HomePage extends AppCompatActivity {
 
         myTool = (Toolbar) findViewById(R.id.mytoolbar);
         setSupportActionBar(myTool);
-
     }
+
         @Override
         public boolean onCreateOptionsMenu (Menu menu){
             getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -41,10 +43,9 @@ public class HomePage extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
 
-
         }
 
-    }
+}
 
 
 
