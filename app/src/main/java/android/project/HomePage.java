@@ -11,17 +11,45 @@ import android.view.View;
 
 
 
-public class HomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
     private Toolbar myTool;
+    private CardView cardView,cardView2,cardView3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        cardView=findViewById(R.id.addContact);
+        cardView2=findViewById(R.id.contactList);
+        cardView3=findViewById(R.id.editProfile);
+
+        cardView.setOnClickListener(this);
+        cardView2.setOnClickListener(this);
+        cardView3.setOnClickListener(this);
+
+
         myTool = (Toolbar) findViewById(R.id.mytoolbar);
         setSupportActionBar(myTool);
+    }
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+
+        switch (view.getId()){
+            case R.id.addContact: intent = new Intent(this,AddContact.class);
+            startActivity(intent);
+                break;
+            case R.id.contactList: intent = new Intent(this,ContactList.class);
+            startActivity(intent);
+                break;
+
+                default:break;
+
+
+        }
+
     }
 
         @Override
@@ -43,7 +71,7 @@ public class HomePage extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
 
-        }
+    }
 
 }
 
