@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 3000;
+    private static int SPLASH_TIME_OUT = 2500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,12 @@ public class SplashScreen extends AppCompatActivity {
                 finish();
             }
         },SPLASH_TIME_OUT);
+    }
+
+
+    @Override
+    public void onBackPressed(){
+        //prevents user from pushing back button during splash screen
     }
 
 }

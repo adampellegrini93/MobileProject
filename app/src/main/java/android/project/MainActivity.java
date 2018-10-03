@@ -1,5 +1,7 @@
 package android.project;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -65,16 +67,18 @@ public class MainActivity extends AppCompatActivity {
                     loading.setMessage("Validating...");
                     loading.show();
                 }else{
-                    TextView invalidDisplay = findViewById(R.id.invalidLoginDisplay);
-                    invalidDisplay.setText("Invalid Login");
+                    //displays invalid login notification
+                    AlertDialog.Builder invalidLogin = new AlertDialog.Builder(MainActivity.this);
+                    invalidLogin.setTitle("Error:");
+                    invalidLogin.setMessage("Invalid Username/Password");
+                    invalidLogin.setPositiveButton("Ok",null);
+                    invalidLogin.setCancelable(true);
+                    invalidLogin.create().show();
                 }
-
-
             }
         });
 
     }
-
 
     //temporarily checks login with hardcoded values until database is connected
     public boolean checkLoginInfo(){
@@ -87,8 +91,26 @@ public class MainActivity extends AppCompatActivity {
         }else{
             return false;
         }
+    }
 
-
+    //Asks user if they want to exit the app if they push back button on main page
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder closingApp = new AlertDialog.Builder(MainActivity.this);
+        closingApp.setTitle("Closing Application");
+        closingApp.setMessage("Are you sure you want to exit?");
+        closingApp.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //closes application when yes is clicked
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+            }
+        });
+        closingApp.setNegativeButton("No",null);
+        closingApp.setCancelable(true);
+        closingApp.create().show();
     }
 
 
