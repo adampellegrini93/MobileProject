@@ -10,6 +10,7 @@
 
 
     <ImageButton
+        android:id="@+id/uploadContactImage"
         android:layout_width="165dp"
         android:layout_height="154dp"
         android:layout_alignParentStart="true"

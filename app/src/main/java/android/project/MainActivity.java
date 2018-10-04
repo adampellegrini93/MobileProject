@@ -16,10 +16,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.app.ProgressDialog;
+import android.support.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int SIGN_UP = 0;
+    private FirebaseAuth auth;
+    private ProgressDialog loading;
 
     TextView signUp;
 
@@ -27,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //gets firebase database authentication instance
+        auth = FirebaseAuth.getInstance();
 
         //prevents keyboard from automatically opening up
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -58,39 +70,37 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkLoginInfo()){
-                    startActivity(new Intent(MainActivity.this, HomePage.class));
-
-                    final ProgressDialog loading = new ProgressDialog(MainActivity.this,
-                            R.style.progressTheme);
-                    loading.setIndeterminate(true);
-                    loading.setMessage("Validating...");
-                    loading.show();
-                }else{
-                    //displays invalid login notification
-                    AlertDialog.Builder invalidLogin = new AlertDialog.Builder(MainActivity.this);
-                    invalidLogin.setTitle("Error:");
-                    invalidLogin.setMessage("Invalid Username/Password");
-                    invalidLogin.setPositiveButton("Ok",null);
-                    invalidLogin.setCancelable(true);
-                    invalidLogin.create().show();
-                }
+                loading = new ProgressDialog(MainActivity.this,
+                        R.style.progressTheme);
+                loading.setIndeterminate(true);
+                loading.setMessage("Validating...");
+                loading.show();
+                EditText inputUserName = findViewById(R.id.userName);
+                EditText inputPassword = findViewById(R.id.userPassword);
+                String userName = inputUserName.getText().toString();
+                String passWord = inputPassword.getText().toString();
+                auth.signInWithEmailAndPassword(userName, passWord)
+                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                loading.cancel();
+                                if (!task.isSuccessful()) {
+                                    //displays invalid login notification
+                                    AlertDialog.Builder invalidLogin = new AlertDialog.Builder(MainActivity.this);
+                                    invalidLogin.setTitle("Error:");
+                                    invalidLogin.setMessage("Invalid Username/Password");
+                                    invalidLogin.setPositiveButton("Ok", null);
+                                    invalidLogin.setCancelable(true);
+                                    invalidLogin.create().show();
+                                } else {
+                                    startActivity(new Intent(MainActivity.this, HomePage.class));
+                                    finish();
+                                }
+                            }
+                        });
             }
         });
 
-    }
-
-    //temporarily checks login with hardcoded values until database is connected
-    public boolean checkLoginInfo(){
-        EditText inputUserName = findViewById(R.id.userName);
-        EditText inputPassword = findViewById(R.id.userPassword);
-        String userName = inputUserName.getText().toString();
-        String passWord = inputPassword.getText().toString();
-        if(userName.matches("username") && passWord.matches("password")){
-            return true;
-        }else{
-            return false;
-        }
     }
 
     //Asks user if they want to exit the app if they push back button on main page
