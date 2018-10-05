@@ -118,7 +118,7 @@ public class createAccount extends AppCompatActivity {
         else{
             progressDialog.setMessage("Registering please wait...");
             progressDialog.show();
-            /*
+
             UserInformation userInformation = new UserInformation(inputName,inputEmail,inputPassword);
             databaseReference.child("users").child(inputName).setValue(userInformation)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -130,7 +130,7 @@ public class createAccount extends AppCompatActivity {
                             }
                         }
                     });
-            */
+
             auth.createUserWithEmailAndPassword(inputEmail,inputPassword)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
