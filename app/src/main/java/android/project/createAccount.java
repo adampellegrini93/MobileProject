@@ -131,6 +131,7 @@ public class createAccount extends AppCompatActivity {
                         }
                     });
 
+
             auth.createUserWithEmailAndPassword(inputEmail,inputPassword)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
