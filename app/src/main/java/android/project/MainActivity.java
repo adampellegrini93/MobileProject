@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressDialog loading;
 
+
     TextView signUp;
 
     @Override
