@@ -23,22 +23,61 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 
 public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
     private Toolbar myTool;
     private CardView cardView,cardView2,cardView3;
+    private FirebaseAuth auth;
+    private FirebaseUser user;
+    private DatabaseReference ref;
+    String uid;
+    List<String> itemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        //checking if user is logged in
+        auth = FirebaseAuth.getInstance();
+        if(auth.getCurrentUser() == null){
+            startActivity(new Intent(HomePage.this, MainActivity.class));
+            finish();
+        }
+
+        /*
+        //testing reading database data
+        final TextView display = findViewById(R.id.textViewTest);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        uid = user.getUid();
+        itemList = new ArrayList<>();
+        ref = FirebaseDatabase.getInstance().getReference();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                itemList.clear();
+                String user_name = dataSnapshot.child("users").child(uid).child("name").getValue(String.class);
+                display.setText(user_name);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        */
 
         cardView=findViewById(R.id.addContact);
         cardView2=findViewById(R.id.contactList);
