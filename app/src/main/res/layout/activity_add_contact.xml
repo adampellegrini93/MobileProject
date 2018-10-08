@@ -4,21 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/face"
-    android:alpha="0.6"
     tools:context=".AddContact">
 
+    <ImageView
+        android:id="@+id/addBackground"
+        android:layout_width="match_parent"
+        android:layout_height="327dp"
+        android:layout_above="@+id/calendarView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/friends" />
 
     <ImageButton
         android:id="@+id/uploadContactImage"
-        android:layout_width="165dp"
-        android:layout_height="154dp"
+        android:layout_width="94dp"
+        android:layout_height="89dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="94dp"
-        android:layout_marginLeft="94dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="210dp"
         android:background="@drawable/add_contact_image" />
 
 
@@ -26,44 +33,44 @@
         android:id="@+id/getContactName"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/getContactNumber"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="355dp"
-        android:backgroundTint="@color/white"
+        android:layout_marginBottom="241dp"
+        android:backgroundTint="@color/black"
         android:drawableLeft="@drawable/ic_person_outline_black_24dp"
         android:fontFamily="@font/amaranth"
         android:hint="Please Enter Contact Name"
         android:inputType="textPersonName"
-        android:textColor="#ffff"
-        android:textColorHint="#ffff"
+        android:textColorHint="#000000"
+        android:textColor="#000"
         android:textSize="14sp" />
 
     <EditText
         android:id="@+id/getContactNumber"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/createContactButton"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="292dp"
-        android:backgroundTint="@color/white"
+        android:layout_marginBottom="181dp"
+        android:backgroundTint="@color/black"
         android:drawableLeft="@drawable/ic_call_black_24dp"
         android:fontFamily="@font/amaranth"
         android:hint="Please Enter Phone Number"
-        android:inputType="number"
-        android:textColor="#ffff"
-        android:textColorHint="#ffff"
+        android:inputType="phone"
+        android:textColor="#000"
+        android:textColorHint="#000"
         android:textSize="14sp" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
-        android:layout_width="239dp"
-        android:layout_height="165dp"
+        android:layout_width="237dp"
+        android:layout_height="106dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginBottom="117dp" />
+        android:layout_marginStart="65dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginBottom="67dp" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/createContactButton"
@@ -71,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="53dp"
+        android:layout_marginBottom="7dp"
         android:background="@drawable/buttonstyle"
         android:drawableRight="@drawable/ic_add_black_24dp"
         android:padding="12dp"

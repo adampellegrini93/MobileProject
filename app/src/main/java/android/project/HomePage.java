@@ -22,16 +22,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.support.annotation.NonNull;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -57,7 +64,8 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             finish();
         }
 
-        /*
+/*
+
         //testing reading database data
         final TextView display = findViewById(R.id.textViewTest);
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -77,9 +85,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
             }
         });
-        */
+ */
 
-        cardView=findViewById(R.id.addContact);
+        cardView=findViewById(R.id.addContactButton);
         cardView2=findViewById(R.id.contactList);
         cardView3=findViewById(R.id.editProfile);
 
@@ -98,13 +106,12 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         Intent intent;
 
         switch (view.getId()){
-            case R.id.addContact: intent = new Intent(this,AddContact.class);
-            startActivity(intent);
-                break;
-            case R.id.contactList: intent = new Intent(this,ContactList.class);
+            case R.id.contactList: intent = new Intent(this,Contact_ListView.class);
             startActivity(intent);
                 break;
 
+            case R.id.addContactButton: intent = new Intent(this, AddContact.class);
+            startActivity(intent);
                 default:break;
 
         }

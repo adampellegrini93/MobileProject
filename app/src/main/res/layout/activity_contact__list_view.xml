@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Contact_ListView">
+
+    <Button
+        android:id="@+id/add_new_contact"
+        android:background="@drawable/buttonstyle"
+        android:drawableRight="@drawable/ic_add_black_24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Add New Contact"/>
+
+    <ListView
+        android:id="@+id/list_of_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/add_new_contact">
+    </ListView>
+
+</RelativeLayout>
