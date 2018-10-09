@@ -1,11 +1,14 @@
 package android.project;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -28,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     private static final int SIGN_UP = 0;
+    private static final int REQUEST_PERMISSIONS = 1;
     private FirebaseAuth auth;
     private ProgressDialog loading;
     private EditText inputUserName, inputPassword;
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //attempts login when enter button is pressed on main page
         inputPassword.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -91,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        //calls function to request user permission to access location
+        checkPermissions();
+
+        //calls function to request user permission to access camera and storage
     }
 
     //handles login and  user verification
@@ -150,5 +160,63 @@ public class MainActivity extends AppCompatActivity {
         closingApp.create().show();
     }
 
+    //checks if phone has allowed location based services
+    public void checkPermissions(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {
+            // Check permission to use location if not allowed
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_PERMISSIONS);
+        }
+        /*
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+            //check permission to use amera and storage if not allowed
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 110);
+        }
+        */
+    }
 
+    //what happens after user allows or denies location permissions
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        //requesting location permissions
+        if (requestCode == REQUEST_PERMISSIONS) {
+            if(grantResults.length == 3 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                 // <-- Permission was granted
+            } else {
+                // Permission was denied or request was cancelled
+                AlertDialog.Builder noLocation = new AlertDialog.Builder(MainActivity.this);
+                noLocation.setTitle("Warning:");
+                noLocation.setMessage("App requires these permissions to function properly");
+                noLocation.setPositiveButton("Ask me again", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //asks user to allow permissions again
+                        checkPermissions();
+                    }
+                });
+                noLocation.setNegativeButton("Exit app", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //closes app if user says no
+                        moveTaskToBack(true);
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(1);
+                    }
+                });
+                noLocation.create().show();
+            }
+        }
+
+        //requesting camera and storage permission
+        if(requestCode == 110){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                // <--- permission was granted
+            }
+        }
+    }
 }
