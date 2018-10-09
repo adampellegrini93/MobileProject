@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "423228791003",
+    "firebase_url": "https://babelaas-d33db.firebaseio.com",
+    "project_id": "babelaas-d33db",
+    "storage_bucket": "babelaas-d33db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423228791003:android:9a1fef087e43d936",
+        "android_client_info": {
+          "package_name": "android.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423228791003-utlivt567g3ks6kn2pt27pen40seunjn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "android.project",
+            "certificate_hash": "fb50330fbf987299860b5625dc2ff4221f8fa619"
+          }
+        },
+        {
+          "client_id": "423228791003-k0cfjgtlstvfsubekasa7qme0dki31pf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "android.project",
+            "certificate_hash": "c62967c4e2d2c21fec040d5644827a3095211c87"
+          }
+        },
+        {
+          "client_id": "423228791003-cp0md4mjd0ln8q830f5h5292pakacisv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "android.project",
+            "certificate_hash": "c1099b2e64d7368cf04b462a0c46f298c8594905"
+          }
+        },
+        {
+          "client_id": "423228791003-lmbku48u95r659006r88htnogga44v35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeeFMFhfy713n0ZBUT00J5OlkLLi6ha2c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423228791003-lmbku48u95r659006r88htnogga44v35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

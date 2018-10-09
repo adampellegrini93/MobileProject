@@ -44,6 +44,7 @@ public class EditInputContact extends AppCompatActivity {
                 if(update){
                     Intent myIntent = new Intent(EditInputContact.this,Contact_ListView.class);
                     startActivity(myIntent);
+                    finish();
                 }else{
                     Toast.makeText(getApplicationContext(),"Please Try Again",Toast.LENGTH_LONG).show();
                 }

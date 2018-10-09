@@ -1,9 +1,8 @@
 package android.project;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.List;
@@ -36,6 +34,7 @@ public class Contact_ListView extends AppCompatActivity {
             public void onClick(View view) {
                 Intent myIntent = new Intent(Contact_ListView.this, AddContact.class);
                 startActivity(myIntent);
+                finish();
             }
         });
 
@@ -89,12 +88,18 @@ public class Contact_ListView extends AppCompatActivity {
             case 1:
                 Intent myIntent = new Intent(Contact_ListView.this, HomePage.class);
                 startActivity(myIntent);
+                finish();
                 break;
 
         }
         return super.onOptionsItemSelected(items);
     }
 
-
+    //handles user pressing back button
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(Contact_ListView.this, HomePage.class));
+        finish();
+    }
 }
 

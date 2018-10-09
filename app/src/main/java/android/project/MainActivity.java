@@ -1,22 +1,23 @@
 package android.project;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Spannable;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.app.ProgressDialog;
-import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int SIGN_UP = 0;
     private FirebaseAuth auth;
     private ProgressDialog loading;
+    private EditText inputUserName, inputPassword;
 
 
     TextView signUp;
@@ -40,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
         //gets firebase database authentication instance
         auth = FirebaseAuth.getInstance();
+
+        //pulling text fields
+        inputUserName = findViewById(R.id.userName);
+        inputPassword = findViewById(R.id.userPassword);
 
         //prevents keyboard from automatically opening up
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -66,42 +72,62 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //handles login and verification
+        //handles login button
         Button loginBtn = findViewById(R.id.loginButton);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loading = new ProgressDialog(MainActivity.this,
-                        R.style.progressTheme);
-                loading.setIndeterminate(true);
-                loading.setMessage("Validating...");
-                loading.show();
-                EditText inputUserName = findViewById(R.id.userName);
-                EditText inputPassword = findViewById(R.id.userPassword);
-                String userName = inputUserName.getText().toString();
-                String passWord = inputPassword.getText().toString();
-                auth.signInWithEmailAndPassword(userName, passWord)
-                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                loading.cancel();
-                                if (!task.isSuccessful()) {
-                                    //displays invalid login notification
-                                    AlertDialog.Builder invalidLogin = new AlertDialog.Builder(MainActivity.this);
-                                    invalidLogin.setTitle("Error:");
-                                    invalidLogin.setMessage("Invalid Username/Password");
-                                    invalidLogin.setPositiveButton("Ok", null);
-                                    invalidLogin.setCancelable(true);
-                                    invalidLogin.create().show();
-                                } else {
-                                    startActivity(new Intent(MainActivity.this, HomePage.class));
-                                    finish();
-                                }
-                            }
-                        });
+                loginUser();;
             }
         });
 
+        inputPassword.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    loginUser();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    //handles login and  user verification
+    public void loginUser(){
+        //if user leaves login field empty
+        if(inputUserName.getText().toString().matches("") || inputPassword.getText().toString().matches("")){
+            Toast.makeText(getApplicationContext(),"blank login field",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            loading = new ProgressDialog(MainActivity.this,
+                    R.style.progressTheme);
+            loading.setIndeterminate(true);
+            loading.setMessage("Validating...");
+            loading.show();
+            String userName = inputUserName.getText().toString();
+            String passWord = inputPassword.getText().toString();
+            auth.signInWithEmailAndPassword(userName, passWord)
+                    .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            loading.cancel();
+                            if (!task.isSuccessful()) {
+                                //displays invalid login notification
+                                AlertDialog.Builder invalidLogin = new AlertDialog.Builder(MainActivity.this);
+                                invalidLogin.setTitle("Error:");
+                                invalidLogin.setMessage("Invalid Username/Password");
+                                invalidLogin.setPositiveButton("Ok", null);
+                                invalidLogin.setCancelable(true);
+                                invalidLogin.create().show();
+                            } else {
+                                startActivity(new Intent(MainActivity.this, HomePage.class));
+                                finish();
+                            }
+                        }
+                    });
+        }
     }
 
     //Asks user if they want to exit the app if they push back button on main page

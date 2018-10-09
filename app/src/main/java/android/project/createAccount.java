@@ -13,17 +13,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.LoginFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,8 +36,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
 public class createAccount extends AppCompatActivity {
 
     private static final int LOGIN = 0;
@@ -51,6 +46,7 @@ public class createAccount extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private FirebaseAuth auth;
     private DatabaseReference databaseReference;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +95,18 @@ public class createAccount extends AppCompatActivity {
         getEmail = findViewById(R.id.getEmail);
         getPassword = findViewById(R.id.getPassword);
         createAccountButton = findViewById(R.id.createAccountButton);
+
+        getPassword.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    createAccount();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,20 +126,6 @@ public class createAccount extends AppCompatActivity {
         else{
             progressDialog.setMessage("Registering please wait...");
             progressDialog.show();
-
-            UserInformation userInformation = new UserInformation(inputName,inputEmail,inputPassword);
-            databaseReference.child("users").child(inputName).setValue(userInformation)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                progressDialog.hide();
-                                Toast.makeText(getApplicationContext(),"account created",Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-
-/*
             auth.createUserWithEmailAndPassword(inputEmail,inputPassword)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -141,15 +135,13 @@ public class createAccount extends AppCompatActivity {
                                 UserInformation userInformation = new UserInformation(inputName,inputEmail,inputPassword);
                                 FirebaseUser user = auth.getCurrentUser();
                                 databaseReference.child("users").child(user.getUid()).setValue(userInformation);
-                                startActivity(new Intent(createAccount.this, HomePage.class));
-                                finish();
+                                    startActivity(new Intent(createAccount.this, HomePage.class));
+                                    finish();
                             }
                         }
                     });
-    */
         }
     }
-
     //creates pop up box with photo upload options
     protected void selectImage(){
         final CharSequence[] options = {"Take Photo","Choose from Gallery","Cancel"};
@@ -204,7 +196,7 @@ public class createAccount extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if(requestCode == 1){ //if wanting to take a new picture
-                Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                bitmap = (Bitmap)data.getExtras().get("data");
                 uploadImage.setImageBitmap(Bitmap.createScaledBitmap(bitmap,uploadImage.getWidth(),uploadImage.getHeight(),false));
 
             } else if (requestCode == 2) { //if wanting to upload image from phone storage
@@ -215,10 +207,9 @@ public class createAccount extends AppCompatActivity {
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
                 c.close();
-                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                uploadImage.setImageBitmap(Bitmap.createScaledBitmap(thumbnail,uploadImage.getWidth(),uploadImage.getHeight(),false));
+                bitmap = (BitmapFactory.decodeFile(picturePath));
+                uploadImage.setImageBitmap(Bitmap.createScaledBitmap(bitmap,uploadImage.getWidth(),uploadImage.getHeight(),false));
             }
         }
     }
-
 }

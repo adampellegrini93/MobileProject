@@ -1,45 +1,18 @@
 package android.project;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.support.annotation.NonNull;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class HomePage extends AppCompatActivity implements View.OnClickListener{
@@ -48,9 +21,6 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     private CardView cardView,cardView2,cardView3;
     private FirebaseAuth auth;
     private FirebaseUser user;
-    private DatabaseReference ref;
-    String uid;
-    List<String> itemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +33,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             startActivity(new Intent(HomePage.this, MainActivity.class));
             finish();
         }
+
+        //pulling the logged in user
+        user = auth.getCurrentUser();
 
 /*
 
@@ -129,8 +102,25 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        //option for user logging put with drop down menu
         if (id == R.id.action_settings) {
-            startActivity(new Intent(HomePage.this, MainActivity.class));
+            //startActivity(new Intent(HomePage.this, MainActivity.class));
+            AlertDialog.Builder signOut = new AlertDialog.Builder(HomePage.this);
+            signOut.setTitle("Warning");
+            signOut.setMessage("Areyou sure you want to sign out?");
+            signOut.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //this is where we will handle sign out functionality
+                    //right now it will just return user to main screen and close current page
+                    startActivity(new Intent(HomePage.this, MainActivity.class));
+                    finish();
+                }
+            });
+            signOut.setNegativeButton("No",null);
+            signOut.setCancelable(true);
+            signOut.create().show();
+            auth.signOut();
             return true;
         }
 
@@ -141,7 +131,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     public void onBackPressed(){
         AlertDialog.Builder signOut = new AlertDialog.Builder(HomePage.this);
         signOut.setTitle("Warning");
-        signOut.setMessage("Do you want to sign out?");
+        signOut.setMessage("Areyou sure you want to sign out?");
         signOut.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -154,6 +144,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         signOut.setNegativeButton("No",null);
         signOut.setCancelable(true);
         signOut.create().show();
+        auth.signOut();
     }
 
 }
