@@ -1,16 +1,24 @@
 package android.project;
 
+import android.Manifest;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,25 +29,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 
 
 public class AddContact extends AppCompatActivity {
 
     private Handler handler;
-
-    private static int LOAD_IMAGE = 1;
     private ImageButton uploadImage;
-
-    private String imagePath = "";
     private String name;
     private String number;
-    private String image;
-
-    private ProgressDialog progressDialog;
-    private FirebaseAuth auth;
-    private DatabaseReference databaseReference;
+    private final String TAG = "testing location->";
+    private Location currentLocation;
 
     MapView gmap;
     GoogleMap map;
@@ -51,6 +50,40 @@ public class AddContact extends AppCompatActivity {
 
         handler = new Handler(getApplicationContext());
 
+        //setup for up pulling current gps location
+        currentLocation = null;
+        final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        final LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                //constantly pulls and updates the users location and sets it to currentLocation
+                currentLocation = location;
+            }
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+        //checking to make sure user gave permission to use phones location
+        //required even though permission is checked on main page
+        if ( ContextCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+
+            ActivityCompat.requestPermissions( this, new String[] {  Manifest.permission.ACCESS_FINE_LOCATION  },
+                    1);
+        }
+        String locationProvider = LocationManager.NETWORK_PROVIDER;
+        locationManager.requestLocationUpdates(locationProvider,0,0,locationListener);
+
+
+        //handles upload image button click
         uploadImage = (ImageButton) findViewById(R.id.uploadContactImage);
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,11 +92,19 @@ public class AddContact extends AppCompatActivity {
             }
         });
 
-
+        //handles create contact button click
         Button createContactButton = (Button) findViewById(R.id.createContactButton);
         createContactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //testing pulling and printing current location
+                locationManager.removeUpdates(locationListener);
+                if(currentLocation != null){
+                    Double latitude = currentLocation.getLatitude();
+                    Double longitude = currentLocation.getLongitude();
+                    Log.i(TAG,"latitude: "+latitude.toString()+" Longitude: "+longitude.toString());
+                }
+
                 EditText getContactName = (EditText) findViewById(R.id.getContactName);
                 name = getContactName.getText().toString();
                 EditText getContactNumber = (EditText) findViewById(R.id.getContactNumber);

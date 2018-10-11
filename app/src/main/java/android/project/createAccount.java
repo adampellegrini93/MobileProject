@@ -43,11 +43,14 @@ public class createAccount extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference databaseReference;
     private Bitmap bitmap;
+    private boolean uploadedPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+        uploadedPhoto = false;
 
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();

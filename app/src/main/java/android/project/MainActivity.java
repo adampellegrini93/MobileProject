@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //attempts login when enter button is pressed on main page
+        //attempts login when enter button is pressed on main page when finished typing password
         inputPassword.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -97,10 +97,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //calls function to request user permission to access location
+        //calls function to request user permission to access location/camera/and phone storage
         checkPermissions();
-
-        //calls function to request user permission to access camera and storage
     }
 
     //handles login and  user verification
@@ -172,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //what happens after user allows or denies location permissions
+    //what happens after user allows or denies location permission requests
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         //requesting location permissions
@@ -202,14 +200,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 noLocation.create().show();
-            }
-        }
-
-        //requesting camera and storage permission
-        if(requestCode == 110){
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                // <--- permission was granted
             }
         }
     }
