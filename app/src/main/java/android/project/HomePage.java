@@ -56,7 +56,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.getValue(String.class);
                 Log.d(TAG,  value);
-                testDisplay.setText("Welcome " + value);
+                testDisplay.setText("Welcome " + value + "!!!");
             }
 
             @Override
@@ -111,7 +111,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             //startActivity(new Intent(HomePage.this, MainActivity.class));
             AlertDialog.Builder signOut = new AlertDialog.Builder(HomePage.this);
             signOut.setTitle("Warning");
-            signOut.setMessage("Areyou sure you want to sign out?");
+            signOut.setMessage("Are you sure you want to sign out?");
             signOut.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -135,7 +135,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     public void onBackPressed(){
         AlertDialog.Builder signOut = new AlertDialog.Builder(HomePage.this);
         signOut.setTitle("Warning");
-        signOut.setMessage("Areyou sure you want to sign out?");
+        signOut.setMessage("Are you sure you want to sign out?");
         signOut.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
