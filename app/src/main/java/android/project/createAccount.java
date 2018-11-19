@@ -44,6 +44,7 @@ public class createAccount extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private Bitmap bitmap;
     private boolean uploadedPhoto;
+    private String picturePath ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +182,7 @@ public class createAccount extends AppCompatActivity {
                 Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
                 c.moveToFirst();
                 int columnIndex = c.getColumnIndex(filePath[0]);
-                String picturePath = c.getString(columnIndex);
+                picturePath = c.getString(columnIndex);
                 c.close();
                 bitmap = (BitmapFactory.decodeFile(picturePath));
                 uploadImage.setImageBitmap(Bitmap.createScaledBitmap(bitmap,uploadImage.getWidth(),uploadImage.getHeight(),false));

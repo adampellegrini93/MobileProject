@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-feature android:name="android.hardware.location.gps"/>
 
     <application
@@ -20,6 +21,10 @@
         android:roundIcon="@mipmap/new_launcher_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <uses-library android:name="com.google.android.maps"/>
+        <meta-data android:name="com.google.android.geo.API_KEY"
+                   android:value="AIzaSyDtup0ptthtjXtqLQiImE7oO8FXJ_7TMYc"/>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -28,7 +28,7 @@ public class Contact_ListView extends AppCompatActivity {
 
         handler = new Handler(getApplicationContext());
 
-        Button add_new_contact = (Button) findViewById(R.id.add_new_contact);
+        Button add_new_contact = findViewById(R.id.add_new_contact);
         add_new_contact.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

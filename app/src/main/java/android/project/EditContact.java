@@ -1,12 +1,14 @@
 package android.project;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class EditContact extends AppCompatActivity {
@@ -30,6 +32,9 @@ public class EditContact extends AppCompatActivity {
 
         TextView contactNumberView2 = findViewById(R.id.contactNumberView2);
         contactNumberView2.setText(extras.getString("number"));
+
+        ImageView imageView = findViewById(R.id.imageView);
+        imageView.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image")));
 
         Button contactBack = findViewById(R.id.contactBack);
         contactBack.setOnClickListener(new View.OnClickListener() {

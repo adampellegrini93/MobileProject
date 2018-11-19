@@ -31,22 +31,27 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 
 
-public class AddContact extends AppCompatActivity {
+public class AddContact extends AppCompatActivity{
 
     private Handler handler;
     private ImageButton uploadImage;
+    private String picturePath="";
     private String name;
     private String number;
+    private String image;
     private final String TAG = "testing location->";
     private Location currentLocation;
 
-    MapView gmap;
+    private MapView gmap;
     GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
+
+        gmap = findViewById(R.id.mapView);
+
 
         handler = new Handler(getApplicationContext());
 
@@ -109,10 +114,16 @@ public class AddContact extends AppCompatActivity {
                 name = getContactName.getText().toString();
                 EditText getContactNumber = (EditText) findViewById(R.id.getContactNumber);
                 number = getContactNumber.getText().toString();
+                image = picturePath;
+
+
+
+
 
                 ContactInformation contactInformation = new ContactInformation();
                 contactInformation.setName(name);
                 contactInformation.setNumber(number);
+                contactInformation.setImage(image);
 
                 Boolean added = handler.addContact(contactInformation);
                 if (added) {
@@ -157,16 +168,18 @@ public class AddContact extends AppCompatActivity {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uploadImage.setImageBitmap(Bitmap.createScaledBitmap(bitmap, uploadImage.getWidth(), uploadImage.getHeight(), false));
 
+
             } else if (requestCode == 2) { //if wanting to upload image from phone storage
                 Uri selectedImage = data.getData();
                 String[] filePath = {MediaStore.Images.Media.DATA};
                 Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
                 c.moveToFirst();
                 int columnIndex = c.getColumnIndex(filePath[0]);
-                String picturePath = c.getString(columnIndex);
+                picturePath = c.getString(columnIndex);
                 c.close();
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
                 uploadImage.setImageBitmap(Bitmap.createScaledBitmap(thumbnail, uploadImage.getWidth(), uploadImage.getHeight(), false));
+
             }
         }
     }
