@@ -65,6 +65,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             }
         });
 
+
         cardView=findViewById(R.id.addContactButton);
         cardView2=findViewById(R.id.contactList);
         cardView3=findViewById(R.id.editProfile);

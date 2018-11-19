@@ -29,6 +29,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 
 
 public class AddContact extends AppCompatActivity{
@@ -51,6 +53,14 @@ public class AddContact extends AppCompatActivity{
         setContentView(R.layout.activity_add_contact);
 
         gmap = findViewById(R.id.mapView);
+
+        gmap.onCreate(savedInstanceState);
+        gmap.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+
+            }
+        });
 
 
         handler = new Handler(getApplicationContext());
@@ -115,10 +125,6 @@ public class AddContact extends AppCompatActivity{
                 EditText getContactNumber = (EditText) findViewById(R.id.getContactNumber);
                 number = getContactNumber.getText().toString();
                 image = picturePath;
-
-
-
-
 
                 ContactInformation contactInformation = new ContactInformation();
                 contactInformation.setName(name);

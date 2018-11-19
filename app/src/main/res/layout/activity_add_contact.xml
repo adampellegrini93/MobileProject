@@ -65,6 +65,7 @@
         android:id="@+id/mapView"
         android:apiKey="AIzaSyDtup0ptthtjXtqLQiImE7oO8FXJ_7TMYc"
         android:clickable="true"
+        android:enabled="true"
         android:layout_width="237dp"
         android:layout_height="106dp"
         android:layout_alignParentStart="true"
