@@ -44,7 +44,7 @@ public class createAccount extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private Bitmap bitmap;
     private boolean uploadedPhoto;
-    private String picturePath ="";
+    String picturePath ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

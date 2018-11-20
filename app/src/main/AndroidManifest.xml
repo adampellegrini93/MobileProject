@@ -24,7 +24,7 @@
 
         <uses-library android:name="com.google.android.maps"/>
         <meta-data android:name="com.google.android.geo.API_KEY"
-                   android:value="AIzaSyDtup0ptthtjXtqLQiImE7oO8FXJ_7TMYc"/>
+                   android:value=""/>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
