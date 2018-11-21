@@ -5,10 +5,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -39,6 +42,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 
 public class AddContact extends AppCompatActivity{
 
@@ -48,10 +55,16 @@ public class AddContact extends AppCompatActivity{
     private String name;
     private String number;
     private String image;
+    private String geo;
     private final String TAG = "testing location->";
-    private Location currentLocation;
+    Location currentLocation;
+    SharedPreferences locat;
+    SharedPreferences.Editor editor;
+    String destination;
     boolean locationPermission;
     private LocationManager locationManager;
+    Location location = null;
+
 
     public static final int MIN_D = 10;
     public static final int MIN_T = 5000;
@@ -70,6 +83,27 @@ public class AddContact extends AppCompatActivity{
         gmap.onCreate(savedInstanceState);
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
+        locat = getSharedPreferences("Location", MODE_PRIVATE);
+        editor = locat.edit();
+
+        String longitude = locat.getString("Longitude", "");
+        String latitude = locat.getString("Latitude", "");
+
+        double lon = Double.parseDouble(longitude);
+        double lat = Double.parseDouble(latitude);
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> addressList = null;
+        try {
+            addressList = geocoder.getFromLocation(lat, lon, 1);
+
+        } catch (IOException err) {
+            err.printStackTrace();
+        }
+
+        if (addressList != null && addressList.size() > 0) {
+            destination = addressList.get(0).getLocality();
+        }
 
 
         gmap.getMapAsync(new OnMapReadyCallback() {
@@ -112,24 +146,20 @@ public class AddContact extends AppCompatActivity{
         createContactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //testing pulling and printing current location
-                locationManager.removeUpdates(locationListener);
-                if(currentLocation != null){
-                    Double latitude = currentLocation.getLatitude();
-                    Double longitude = currentLocation.getLongitude();
-                    Log.i(TAG,"latitude: "+latitude.toString()+" Longitude: "+longitude.toString());
-                }
 
                 EditText getContactName = (EditText) findViewById(R.id.getContactName);
                 name = getContactName.getText().toString();
                 EditText getContactNumber = (EditText) findViewById(R.id.getContactNumber);
                 number = getContactNumber.getText().toString();
                 image = picturePath;
+                geo = destination;
+
 
                 ContactInformation contactInformation = new ContactInformation();
                 contactInformation.setName(name);
                 contactInformation.setNumber(number);
                 contactInformation.setImage(image);
+                contactInformation.setLocation(geo);
 
                 Boolean added = handler.addContact(contactInformation);
                 if (added) {
@@ -254,7 +284,7 @@ public class AddContact extends AppCompatActivity{
         boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-        Location location = null;
+
        if(network){
            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,MIN_T,MIN_D,locationListener);
            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -267,6 +297,26 @@ public class AddContact extends AppCompatActivity{
         if(location != null){
            pin(location);
         }
+
+        Double latitude = location.getLatitude();
+        Double longitude = location.getLongitude();
+
+        Toast.makeText(getApplicationContext(),"Location Retrieved",Toast.LENGTH_LONG
+        ).show();
+
+        try{
+            SharedPreferences locat = getApplication().getSharedPreferences("Location",
+                    MODE_PRIVATE);
+            SharedPreferences.Editor editor = locat.edit();
+            editor.putString("Longitude", longitude + "");
+            editor.putString("Latitude", latitude + "");
+            editor.commit();
+
+        }catch (Exception err){
+            err.printStackTrace();
+        }
+
+
     }
 
     private void pin(Location location){
@@ -274,7 +324,7 @@ public class AddContact extends AppCompatActivity{
             gMap.clear();
             LatLng drop = new LatLng(location.getLatitude(),location.getLongitude());
             gMap.addMarker(new MarkerOptions().position(drop));
-            gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(drop,12));
+            gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(drop,15));
         }
     }
 

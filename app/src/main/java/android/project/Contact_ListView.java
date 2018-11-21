@@ -50,6 +50,7 @@ public class Contact_ListView extends AppCompatActivity {
                 myIntent.putExtra("name", contacts.get(position).getName());
                 myIntent.putExtra("number", contacts.get(position).getNumber());
                 myIntent.putExtra("image", contacts.get(position).getImage());
+                myIntent.putExtra("geo", contacts.get(position).getLocation());
                 startActivity(myIntent);
 
             }

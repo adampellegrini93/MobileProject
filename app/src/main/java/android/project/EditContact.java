@@ -1,7 +1,12 @@
 package android.project;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +15,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class EditContact extends AppCompatActivity {
 
@@ -35,6 +47,10 @@ public class EditContact extends AppCompatActivity {
 
         ImageView imageView = findViewById(R.id.imageView);
         imageView.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image")));
+
+        TextView locationView2 = findViewById(R.id.locationView2);
+        locationView2.setText(extras.getString("geo"));
+
 
         Button contactBack = findViewById(R.id.contactBack);
         contactBack.setOnClickListener(new View.OnClickListener() {
