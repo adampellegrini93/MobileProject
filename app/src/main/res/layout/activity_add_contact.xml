@@ -63,7 +63,7 @@
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
-        android:apiKey=""
+        android:apiKey="AIzaSyDtup0ptthtjXtqLQiImE7oO8FXJ_7TMYc"
         android:clickable="true"
         android:enabled="true"
         android:layout_width="237dp"

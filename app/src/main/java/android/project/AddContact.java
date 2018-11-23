@@ -57,13 +57,14 @@ public class AddContact extends AppCompatActivity{
     private String image;
     private String geo;
     private final String TAG = "testing location->";
-    Location currentLocation;
     SharedPreferences locat;
     SharedPreferences.Editor editor;
     String destination;
     boolean locationPermission;
     private LocationManager locationManager;
     Location location = null;
+    double lon, lat;
+    Double latitude, longitude;
 
 
     public static final int MIN_D = 10;
@@ -83,14 +84,24 @@ public class AddContact extends AppCompatActivity{
         gmap.onCreate(savedInstanceState);
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
+
+        Toast.makeText(getApplicationContext(), "Location Retrieved", Toast.LENGTH_LONG
+        ).show();
+
+
         locat = getSharedPreferences("Location", MODE_PRIVATE);
         editor = locat.edit();
 
-        String longitude = locat.getString("Longitude", "");
-        String latitude = locat.getString("Latitude", "");
+        String horizontal = locat.getString("Longitude", "");
+        String vertical = locat.getString("Latitude", "");
+        try {
+            lon = Double.parseDouble(horizontal);
+            lat = Double.parseDouble(vertical);
+        }catch (NumberFormatException err){
 
-        double lon = Double.parseDouble(longitude);
-        double lat = Double.parseDouble(latitude);
+        }
+
+
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addressList = null;
@@ -104,7 +115,6 @@ public class AddContact extends AppCompatActivity{
         if (addressList != null && addressList.size() > 0) {
             destination = addressList.get(0).getLocality();
         }
-
 
         gmap.getMapAsync(new OnMapReadyCallback() {
                              @Override
@@ -153,7 +163,6 @@ public class AddContact extends AppCompatActivity{
                 number = getContactNumber.getText().toString();
                 image = picturePath;
                 geo = destination;
-
 
                 ContactInformation contactInformation = new ContactInformation();
                 contactInformation.setName(name);
@@ -270,40 +279,40 @@ public class AddContact extends AppCompatActivity{
         }
     }
 
-    private void getLocation(){
+    private void getLocation() {
+
 
         //checking to make sure user gave permission to use phones location
         //required even though permission is checked on main page
-        if ( ContextCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-            ActivityCompat.requestPermissions( this, new String[] {  Manifest.permission.ACCESS_FINE_LOCATION  },
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     1);
             locationPermission = true;
 
 
         }
+
         boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
 
-       if(network){
-           locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,MIN_T,MIN_D,locationListener);
-           location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-       }
-        if(gps){
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,MIN_T,MIN_D,locationListener);
+        if (network) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_T, MIN_D, locationListener);
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
+        if (gps) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_T, MIN_D, locationListener);
             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
         }
 
-        if(location != null){
-           pin(location);
+        if (location != null) {
+            pin(location);
+
         }
-
-        Double latitude = location.getLatitude();
-        Double longitude = location.getLongitude();
-
-        Toast.makeText(getApplicationContext(),"Location Retrieved",Toast.LENGTH_LONG
-        ).show();
-
         try{
             SharedPreferences locat = getApplication().getSharedPreferences("Location",
                     MODE_PRIVATE);
@@ -311,10 +320,10 @@ public class AddContact extends AppCompatActivity{
             editor.putString("Longitude", longitude + "");
             editor.putString("Latitude", latitude + "");
             editor.commit();
-
         }catch (Exception err){
             err.printStackTrace();
         }
+
 
 
     }
