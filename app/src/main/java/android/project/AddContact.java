@@ -84,11 +84,6 @@ public class AddContact extends AppCompatActivity{
         gmap.onCreate(savedInstanceState);
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
-
-        Toast.makeText(getApplicationContext(), "Location Retrieved", Toast.LENGTH_LONG
-        ).show();
-
-
         locat = getSharedPreferences("Location", MODE_PRIVATE);
         editor = locat.edit();
 
@@ -100,8 +95,6 @@ public class AddContact extends AppCompatActivity{
         }catch (NumberFormatException err){
 
         }
-
-
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addressList = null;
@@ -289,7 +282,6 @@ public class AddContact extends AppCompatActivity{
                     1);
             locationPermission = true;
 
-
         }
 
         boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -299,17 +291,17 @@ public class AddContact extends AppCompatActivity{
         if (network) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_T, MIN_D, locationListener);
             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
+
         }
         if (gps) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_T, MIN_D, locationListener);
             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
+
         }
 
         if (location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
             pin(location);
 
         }
@@ -324,7 +316,8 @@ public class AddContact extends AppCompatActivity{
             err.printStackTrace();
         }
 
-
+        Toast.makeText(getApplicationContext(), "Location Retrieved", Toast.LENGTH_LONG
+        ).show();
 
     }
 
