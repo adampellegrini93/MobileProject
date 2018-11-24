@@ -305,6 +305,7 @@ public class AddContact extends AppCompatActivity{
             pin(location);
 
         }
+
         try{
             SharedPreferences locat = getApplication().getSharedPreferences("Location",
                     MODE_PRIVATE);

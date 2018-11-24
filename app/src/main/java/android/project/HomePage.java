@@ -1,8 +1,11 @@
 package android.project;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +15,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,8 +26,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-
+import com.uber.sdk.android.core.UberSdk;
+import com.uber.sdk.core.auth.Scope;
+import com.uber.sdk.rides.client.SessionConfiguration;
+import com.uber.sdk.android.rides.RideRequestButton;
 
 public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
@@ -33,6 +40,10 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     private DatabaseReference myRef;
     private final String TAG = "Value recovered is ";
     private TextView testDisplay;
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private Shake shake;
+    RideRequestButton rideRequestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +77,33 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             }
         });
 
+        sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        shake = new Shake();
+        shake.setListener(new Shake.OnShakeListener() {
+            @Override
+            public void Motion(int tally) {
+
+                    Toast.makeText(getApplicationContext(), "Shake Detected", Toast.LENGTH_LONG
+                    ).show();
+                SessionConfiguration configuration = new SessionConfiguration.Builder()
+                        .setClientId("VloB4uodKMZy9GsR7Pbuw2znE2wnkugp")
+                        .setServerToken("7GksvSrca1X2h0sFTdETgBg5r7FwpKp6RZie8FHr")
+                        .setRedirectUri("https://www.babelass.com/redirect_uri")
+                        .setEnvironment(SessionConfiguration.Environment.SANDBOX)
+                        .build();
+
+                UberSdk.initialize(configuration);
+                Context context = getApplicationContext();
+                rideRequestButton = new RideRequestButton(context);
+                RelativeLayout relativeLayout = findViewById(R.id.homepage);
+                relativeLayout.addView(rideRequestButton);
+                rideRequestButton.setVisibility(View.VISIBLE);
+
+
+            }
+        });
+
 
         cardView=findViewById(R.id.addContactButton);
         cardView2=findViewById(R.id.contactList);
@@ -75,7 +113,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         cardView2.setOnClickListener(this);
         cardView3.setOnClickListener(this);
 
-        myTool = (Toolbar) findViewById(R.id.mytoolbar);
+        myTool = findViewById(R.id.mytoolbar);
         setSupportActionBar(myTool);
     }
 
@@ -151,6 +189,19 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         signOut.setCancelable(true);
         signOut.create().show();
         auth.signOut();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        sensorManager.registerListener(shake, accelerometer, SensorManager.SENSOR_DELAY_UI);
+
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        sensorManager.unregisterListener(shake);
+
     }
 
 }
