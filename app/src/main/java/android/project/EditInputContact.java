@@ -54,19 +54,30 @@ public class EditInputContact extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ContactInformation contactInformation = new ContactInformation();
-                contactInformation.setIdentifier(extras.getInt("id"));
-                contactInformation.setName(getContactName.getText().toString());
-                contactInformation.setNumber(getContactNumber.getText().toString());
-                contactInformation.setImage(picturePath);
+                if (getContactName.length() == 0|| getContactName.length()== 0){
 
-                boolean update = handler.edit(contactInformation);
-                if(update){
-                    Intent myIntent = new Intent(EditInputContact.this,Contact_ListView.class);
-                    startActivity(myIntent);
-                    finish();
-                }else{
-                    Toast.makeText(getApplicationContext(),"Please Try Again",Toast.LENGTH_LONG).show();
+                    android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(EditInputContact.this);
+                    alertDialog.setTitle("Error");
+                    alertDialog.setMessage("One or more Values not Entered");
+                    alertDialog.setNegativeButton("Ok", null);
+                    alertDialog.setCancelable(true);
+                    alertDialog.create().show();
+                } else {
+
+                    ContactInformation contactInformation = new ContactInformation();
+                    contactInformation.setIdentifier(extras.getInt("id"));
+                    contactInformation.setName(getContactName.getText().toString());
+                    contactInformation.setNumber(getContactNumber.getText().toString());
+                    contactInformation.setImage(picturePath);
+
+                    boolean update = handler.edit(contactInformation);
+                    if (update) {
+                        Intent myIntent = new Intent(EditInputContact.this, Contact_ListView.class);
+                        startActivity(myIntent);
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Please Try Again", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });

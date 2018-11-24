@@ -157,19 +157,29 @@ public class AddContact extends AppCompatActivity{
                 image = picturePath;
                 geo = destination;
 
-                ContactInformation contactInformation = new ContactInformation();
-                contactInformation.setName(name);
-                contactInformation.setNumber(number);
-                contactInformation.setImage(image);
-                contactInformation.setLocation(geo);
-
-                Boolean added = handler.addContact(contactInformation);
-                if (added) {
-                    Intent myIntent = new Intent(AddContact.this, Contact_ListView.class);
-                    startActivity(myIntent);
-                    finish();
+                if (name.equals("") || number.equals("")) {
+                    android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(AddContact.this);
+                    alertDialog.setTitle("Error");
+                    alertDialog.setMessage("One or more Values not Entered");
+                    alertDialog.setNegativeButton("Ok", null);
+                    alertDialog.setCancelable(true);
+                    alertDialog.create().show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Couldn't Create Contact", Toast.LENGTH_LONG).show();
+
+                    ContactInformation contactInformation = new ContactInformation();
+                    contactInformation.setName(name);
+                    contactInformation.setNumber(number);
+                    contactInformation.setImage(image);
+                    contactInformation.setLocation(geo);
+
+                    Boolean added = handler.addContact(contactInformation);
+                    if (added) {
+                        Intent myIntent = new Intent(AddContact.this, Contact_ListView.class);
+                        startActivity(myIntent);
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Couldn't Create Contact", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
