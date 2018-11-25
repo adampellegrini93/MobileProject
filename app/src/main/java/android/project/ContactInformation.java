@@ -6,6 +6,7 @@ public class ContactInformation {
     private String _name;
     private String _number;
     private String _image;
+    private String _image2;
     private String _location;
 
 
@@ -13,10 +14,11 @@ public class ContactInformation {
 
     }
 
-    public ContactInformation(String name, String number, String image, String geo){
+    public ContactInformation(String name, String number, String image, String image2, String geo){
         this._name=name;
         this._number=number;
         this._image=image;
+        this._image2 =image2;
         this._location=geo;
     }
 
@@ -45,6 +47,8 @@ public class ContactInformation {
     public void setImage(String image){
         this._image=image;
     }
+    public String getImage2(){return this._image2;}
+    public void setImage2(String image2){this._image2=image2;}
     public String getLocation(){return this._location;}
     public void setLocation(String geo){this._location=geo;}
 }

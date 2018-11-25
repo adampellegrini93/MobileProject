@@ -26,6 +26,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.uber.sdk.android.core.UberSdk;
 import com.uber.sdk.rides.client.SessionConfiguration;
 import com.uber.sdk.android.rides.RideRequestButton;
@@ -104,6 +107,16 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                 rideRequestButton.setVisibility(View.VISIBLE);
             }
         });
+
+        MaterialCalendarView calendarView = findViewById(R.id.calendarView);
+        calendarView.state().edit();
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView materialCalendarView, @NonNull CalendarDay calendarDay, boolean b) {
+
+            }
+        });
+
 
 
         cardView=findViewById(R.id.addContactButton);

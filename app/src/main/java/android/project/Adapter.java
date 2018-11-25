@@ -52,6 +52,7 @@ public class Adapter extends BaseAdapter {
         name.setText(contact.getName());
         number.setText(contact.getNumber());
         image.setImageBitmap(BitmapFactory.decodeFile(contact.getImage()));
+        image.setImageBitmap(BitmapFactory.decodeFile(contact.getImage2()));
 
         return view;
     }

@@ -18,17 +18,18 @@ public class Handler extends SQLiteOpenHelper {
 
     private static final String D_BASE = "ListContacts";
 
-    private static final int DATABASE_V= 4;
+    private static final int DATABASE_V= 5;
 
-    private static final String CONTACTS = "contacts";
+    private static final String CONTACTS = "contactApp";
 
     private static final String C_ID = "id";
     private static final String C_N = "name";
     private static final String C_Nu = "number";
     private static final String C_I ="image";
+    private static final String C_I2 = "image2";
     private static final String C_L = "geo";
 
-    private String[] columns ={C_ID,C_N,C_Nu,C_I,C_L};
+    private String[] columns ={C_ID,C_N,C_Nu,C_I,C_I2,C_L};
 
     public Handler(Context context){
         super(context,D_BASE,null,DATABASE_V);
@@ -41,6 +42,7 @@ public class Handler extends SQLiteOpenHelper {
                 + C_N + " TEXT,"
                 + C_Nu + " TEXT,"
                 + C_I + " TEXT,"
+                + C_I2 + " TEXT,"
                 + C_L + " TEXT "
                 + ")";
         d_base.execSQL(C_TABLE);
@@ -60,6 +62,7 @@ public class Handler extends SQLiteOpenHelper {
         values.put(C_N, contact.getName());
         values.put(C_Nu, contact.getNumber());
         values.put(C_I,contact.getImage());
+        values.put(C_I2, contact.getImage2());
         values.put(C_L,contact.getLocation());
 
         long data = d_base.insert(CONTACTS,null,values);
@@ -87,7 +90,8 @@ public class Handler extends SQLiteOpenHelper {
             contact.setName(crs.getString(1));
             contact.setNumber(crs.getString(2));
             contact.setImage(crs.getString(3));
-            contact.setLocation(crs.getString(4));
+            contact.setImage2(crs.getString(4));
+            contact.setLocation(crs.getString(5));
             contacts.add(contact);
             crs.moveToNext();
         }
@@ -103,6 +107,7 @@ public class Handler extends SQLiteOpenHelper {
         values.put(C_N, contact.getName());
         values.put(C_Nu, contact.getNumber());
         values.put(C_I,contact.getImage());
+        values.put(C_I2,contact.getImage2());
         values.put(C_L,contact.getLocation());
 
         int data = d_base.update(CONTACTS,values,C_ID +" = ? ",new String[]{String.valueOf(contact.getIdentifier())});
