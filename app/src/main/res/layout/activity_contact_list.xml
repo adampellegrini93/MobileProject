@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@drawable/contact_list"
-    android:padding="5dp"
+    android:elevation="8dp"
+    android:translationZ="8dp"
     tools:context=".ContactList">
 
     <LinearLayout
@@ -42,22 +43,22 @@
         android:fontFamily="@font/amaranth"
         android:paddingBottom="10dp"
         android:text="Full Name"
-        android:textColor="#ffff"
+        android:textColor="@color/dark_green"
         android:textSize="25sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_number"
-        android:layout_width="wrap_content"
+        android:layout_width="159dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_name"
         android:layout_alignParentLeft="@id/txt_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/amaranth"
         android:paddingTop="5dp"
         android:text="Number"
-        android:textColor="#ffff"
+        android:textColor="@color/dark_green"
         android:textSize="15sp" />
 
 </RelativeLayout>

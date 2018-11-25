@@ -6,10 +6,10 @@
         android:state_selected="false">
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#6586f0"
-                android:centerColor="#e7e7e8"
-                android:endColor="#CFCFCF"
-                android:angle="270" />
+                android:startColor="#90A4AE"
+                android:centerColor="#CFD8DC"
+                android:endColor="#B0BEC5" />
+
         </shape>
     </item>
 
@@ -17,10 +17,9 @@
         android:state_pressed="true" >
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#6586f0"
-                android:centerColor="#e7e7e8"
-                android:endColor="#CFCFCF"
-                android:angle="270" />
+                android:startColor="#90A4AE"
+                android:centerColor="#CFD8DC"
+                android:endColor="#B0BEC5" />
         </shape>
     </item>
 
@@ -29,10 +28,10 @@
         android:state_pressed="false">
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#6586f0"
-                android:centerColor="#e7e7e8"
-                android:endColor="#CFCFCF"
-                android:angle="270" />
+                android:startColor="#90A4AE"
+                android:centerColor="#CFD8DC"
+                android:endColor="#B0BEC5" />
+
         </shape>
     </item>
 </selector>

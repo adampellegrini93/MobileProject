@@ -2,6 +2,7 @@ package android.project;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.support.v7.widget.Toolbar;
 
 import java.util.List;
 
@@ -25,6 +27,25 @@ public class Contact_ListView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact__list_view);
+
+        final Toolbar bar = findViewById(R.id.toolbar);
+        setSupportActionBar(bar);
+        AppBarLayout layout = findViewById(R.id.app_bar);
+        layout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean display = false;
+            int scroll = -1;
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if(scroll == -1){
+                    scroll = appBarLayout.getTotalScrollRange();
+                }
+                if(scroll + verticalOffset == 0){
+                    display = true;
+                }else if (display){
+                    display = false;
+                }
+            }
+        });
 
         handler = new Handler(getApplicationContext());
 
@@ -77,20 +98,19 @@ public class Contact_ListView extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(1, 1, 0, "HomePage");
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_contactlist,menu);
+
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem items) {
         int iden = items.getItemId();
 
-        switch (iden) {
-            case 1:
+        if(iden == R.id.action_home){
                 Intent myIntent = new Intent(Contact_ListView.this, HomePage.class);
                 startActivity(myIntent);
                 finish();
-                break;
 
         }
         return super.onOptionsItemSelected(items);
@@ -102,5 +122,6 @@ public class Contact_ListView extends AppCompatActivity {
         startActivity(new Intent(Contact_ListView.this, HomePage.class));
         finish();
     }
+
 }
 
