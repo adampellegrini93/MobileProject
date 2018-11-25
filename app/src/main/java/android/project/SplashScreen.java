@@ -31,4 +31,23 @@ public class SplashScreen extends AppCompatActivity {
         //prevents user from pushing back button during splash screen
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+    }
+
 }

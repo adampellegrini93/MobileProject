@@ -18,7 +18,7 @@ public class Handler extends SQLiteOpenHelper {
 
     private static final String D_BASE = "ListContacts";
 
-    private static final int DATABASE_V= 3;
+    private static final int DATABASE_V= 4;
 
     private static final String CONTACTS = "contacts";
 

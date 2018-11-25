@@ -123,5 +123,24 @@ public class Contact_ListView extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+    }
+
+
 }
 

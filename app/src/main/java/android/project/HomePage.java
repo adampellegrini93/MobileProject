@@ -27,7 +27,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.uber.sdk.android.core.UberSdk;
-import com.uber.sdk.core.auth.Scope;
 import com.uber.sdk.rides.client.SessionConfiguration;
 import com.uber.sdk.android.rides.RideRequestButton;
 
@@ -62,21 +61,25 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
         //pulling database name that was stored and placing it in the welcome TextView
         testDisplay = findViewById(R.id.testTextView);
-        myRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("name");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG,  value);
-                testDisplay.setText("Welcome " + value + "!!!");
-            }
+        if (user != null) {
+            myRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("name");
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String value = dataSnapshot.getValue(String.class);
+                    Log.d(TAG,  value);
+                    testDisplay.setText("Welcome " + value + "!!!");
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
 
+        }
+
+        //creates ability for user to shake device to display a small ride request button (uber)
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         shake = new Shake();
@@ -99,8 +102,6 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                 RelativeLayout relativeLayout = findViewById(R.id.homepage);
                 relativeLayout.addView(rideRequestButton);
                 rideRequestButton.setVisibility(View.VISIBLE);
-
-
             }
         });
 
@@ -194,14 +195,21 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onResume(){
         super.onResume();
-        sensorManager.registerListener(shake, accelerometer, SensorManager.SENSOR_DELAY_UI);
-
     }
     @Override
     protected void onPause(){
         super.onPause();
         sensorManager.unregisterListener(shake);
 
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
     }
 
 }
