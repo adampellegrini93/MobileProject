@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/addBackground"
         android:layout_width="match_parent"
-        android:layout_height="327dp"
+        android:layout_height="252dp"
         android:layout_above="@+id/calendarView"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
@@ -45,6 +45,26 @@
         android:textColor="#000"
         android:textSize="14sp" />
 
+    <ImageView
+        android:id="@+id/nameMic"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginBottom="254dp"
+        android:layout_toEndOf="@+id/mapView"
+        android:background="@drawable/ic_mic_black_24dp" />
+
+    <ImageView
+        android:id="@+id/numberMic"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="193dp"
+        android:layout_toEndOf="@+id/mapView"
+        android:background="@drawable/ic_mic_black_24dp" />
+
     <EditText
         android:id="@+id/getContactNumber"
         android:layout_width="280dp"
@@ -63,7 +83,7 @@
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
-        android:apiKey="AIzaSyDtup0ptthtjXtqLQiImE7oO8FXJ_7TMYc"
+        android:apiKey=""
         android:clickable="true"
         android:enabled="true"
         android:layout_width="237dp"

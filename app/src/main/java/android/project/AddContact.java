@@ -2,6 +2,7 @@ package android.project;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +28,7 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.RawContacts;
 import android.provider.MediaStore;
+import android.speech.RecognizerIntent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +39,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -81,6 +84,10 @@ public class AddContact extends AppCompatActivity{
     Location location = null;
     double lon, lat;
     Double latitude, longitude;
+    EditText getContactName;
+    EditText getContactNumber;
+    private final int REQ = 100;
+    private final int NUM = 101;
 
 
     public static final int MIN_D = 10;
@@ -94,6 +101,26 @@ public class AddContact extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
+
+        getContactName = (EditText) findViewById(R.id.getContactName);
+        getContactNumber = (EditText) findViewById(R.id.getContactNumber);
+
+
+        ImageView nameMic = findViewById(R.id.nameMic);
+        nameMic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speech();
+            }
+        });
+
+        ImageView numberMic = findViewById(R.id.numberMic);
+        numberMic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speechNumber();
+            }
+        });
 
         gmap = findViewById(R.id.mapView);
 
@@ -122,7 +149,7 @@ public class AddContact extends AppCompatActivity{
         }
 
         if (addressList != null && addressList.size() > 0) {
-            destination = addressList.get(0).getLocality();
+            destination = addressList.get(0).getLocality() + ", " + addressList.get(0).getAdminArea();
         }
 
         gmap.getMapAsync(new OnMapReadyCallback() {
@@ -167,9 +194,8 @@ public class AddContact extends AppCompatActivity{
             @Override
             public void onClick(View view) {
 
-                EditText getContactName = (EditText) findViewById(R.id.getContactName);
+
                 name = getContactName.getText().toString();
-                EditText getContactNumber = (EditText) findViewById(R.id.getContactNumber);
                 number = getContactNumber.getText().toString();
                 image = picturePath;
                 image2 = p;
@@ -281,7 +307,7 @@ public class AddContact extends AppCompatActivity{
         addPhoto.show();
     }
 
-    //functionality for taking/uploading a new photo
+    //functionality for taking/uploading a new photo & speech recognition
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -308,6 +334,28 @@ public class AddContact extends AppCompatActivity{
 
             }
         }
+
+        switch(requestCode){
+            case REQ:{
+                if(resultCode == RESULT_OK && null != data){
+                    ArrayList<String> arrayList = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    String voiceInput = arrayList.get(0);
+                    getContactName.setText(voiceInput);
+                }
+                break;
+            }
+            case NUM:{
+                if(resultCode == RESULT_OK && null != data){
+                    ArrayList<String> arrayList = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    String voiceInput = arrayList.get(0);
+                    getContactNumber.setText(voiceInput);
+                }
+                break;
+            }
+        }
+
     }
 
     public Uri getUri(Context context, Bitmap image){
@@ -459,6 +507,34 @@ public class AddContact extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(items);
     }
+
+
+    //handles speech to text for both name and number
+    private void speech(){
+        Intent intent1 = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent1.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent1.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+
+        try{
+            startActivityForResult(intent1, REQ);
+        }catch (ActivityNotFoundException err){
+
+        }
+
+    }
+    private void speechNumber(){
+        Intent intent2 = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent2.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent2.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+
+        try{
+            startActivityForResult(intent2, NUM);
+        }catch (ActivityNotFoundException err){
+
+        }
+
+    }
+
 
     //Handles back button functionality
     @Override

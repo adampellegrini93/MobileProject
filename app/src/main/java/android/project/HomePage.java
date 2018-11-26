@@ -62,6 +62,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     private DatabaseReference myRef;
     private final String TAG = "Value recovered is ";
     private TextView testDisplay;
+    private TextView welcomeText;
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private Shake shake;
@@ -81,15 +82,15 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
         //pulling the logged in user
         user = auth.getCurrentUser();
-        /*
-        testDisplay = findViewById(R.id.testTextView);
+
+        welcomeText = findViewById(R.id.welcomeText);
         myRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("name");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.getValue(String.class);
                 Log.d(TAG,  value);
-                testDisplay.setText("Welcome " + value + "!!!");
+                welcomeText.setText("Welcome " + value + "!!!");
             }
 
             @Override
@@ -97,7 +98,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
             }
         });
-        */
+
 
         //pulling saved profile photo and displaying it on homepage
         profilePhoto = (ImageButton) findViewById(R.id.homepagePhoto);
