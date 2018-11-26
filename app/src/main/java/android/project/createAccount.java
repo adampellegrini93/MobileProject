@@ -2,6 +2,7 @@ package android.project;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -55,10 +56,12 @@ public class createAccount extends AppCompatActivity {
     private StorageReference imageStorage;
     private DatabaseReference databaseReference;
     private Uri filepath;
+    private Uri uri;
     private File pictureFile;
     private Bitmap bitmap;
     private boolean uploadedPhoto;
     String picturePath ="";
+    String p="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +165,9 @@ public class createAccount extends AppCompatActivity {
                                         StorageReference photoLocation = imageStorage.child("Images/Profile Photos/" + user.getUid());
                                         photoLocation.putFile(filepath);
                                     }
-                                    else{
+                                    else if(uri != null) {
+                                        StorageReference photoLocation = imageStorage.child("Images/Profile Photos/" + user.getUid());
+                                        photoLocation.putFile(uri);
 
                                     }
                                 }
@@ -234,8 +239,12 @@ public class createAccount extends AppCompatActivity {
             //if wanting to take a new picture
             if(requestCode == 1){
                 bitmap = (Bitmap) data.getExtras().get("data");
+                uri = getUri(getApplicationContext(),bitmap);
                 uploadImage.setImageBitmap(Bitmap.createScaledBitmap(bitmap,uploadImage.getWidth(),uploadImage.getHeight(),false));
-                filepath = data.getData();
+
+                File file = new File(getPath(uri));
+
+
             }
             //if wanting to upload image from phone storage
             else if (requestCode == 2) {
@@ -252,5 +261,25 @@ public class createAccount extends AppCompatActivity {
             }
             uploadedPhoto = true;
         }
+    }
+
+    public Uri getUri(Context context, Bitmap image){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG,100, byteArrayOutputStream);
+        String p = MediaStore.Images.Media.insertImage(context.getContentResolver(),image,"Title",null);
+        return Uri.parse(p);
+    }
+
+    public String getPath(Uri uri) {
+        if (getContentResolver() != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                p = cursor.getString(index);
+                cursor.close();
+            }
+        }
+        return p;
     }
 }
