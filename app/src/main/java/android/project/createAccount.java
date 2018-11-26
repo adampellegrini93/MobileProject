@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +35,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 public class createAccount extends AppCompatActivity {
 
@@ -41,7 +52,10 @@ public class createAccount extends AppCompatActivity {
     private EditText getName, getEmail, getPassword;
     private ProgressDialog progressDialog;
     private FirebaseAuth auth;
+    private StorageReference imageStorage;
     private DatabaseReference databaseReference;
+    private Uri filepath;
+    private File pictureFile;
     private Bitmap bitmap;
     private boolean uploadedPhoto;
     String picturePath ="";
@@ -55,6 +69,7 @@ public class createAccount extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        imageStorage = FirebaseStorage.getInstance().getReference();
 
         //allows user to click "sign in" text and bring back to main page
         login = (TextView)findViewById(R.id.backtoLogin);
@@ -85,7 +100,14 @@ public class createAccount extends AppCompatActivity {
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+                //if the user has not uploaded a photo yet
+                if(uploadedPhoto == false){
+                    selectImage();
+                }
+                //if the user already has a photo uploaded
+                else{
+                    photoOptions();
+                }
             }
         });
 
@@ -132,11 +154,20 @@ public class createAccount extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 progressDialog.hide();
-                                UserInformation userInformation = new UserInformation(inputName,inputEmail,inputPassword);
                                 FirebaseUser user = auth.getCurrentUser();
+                                UserInformation userInformation = new UserInformation(inputName,inputEmail,inputPassword);
                                 databaseReference.child("users").child(user.getUid()).setValue(userInformation);
-                                    startActivity(new Intent(createAccount.this, HomePage.class));
-                                    finish();
+                                if(uploadedPhoto){ //if user uploaded a photo
+                                    if(filepath != null){
+                                        StorageReference photoLocation = imageStorage.child("Images/Profile Photos/" + user.getUid());
+                                        photoLocation.putFile(filepath);
+                                    }
+                                    else{
+
+                                    }
+                                }
+                                startActivity(new Intent(createAccount.this, HomePage.class));
+                                finish();
                             }
                         }
                     });
@@ -154,6 +185,7 @@ public class createAccount extends AppCompatActivity {
                 if(options[which].equals("Take Photo")){
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, 1);
+                    intent.setType("image/*");
                 }
                 else if(options[which].equals("Choose from Gallery")) {
                     Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -167,16 +199,46 @@ public class createAccount extends AppCompatActivity {
         addPhoto.show();
     }
 
+    //gives user options if they already uploaded a photo and select it again
+    private void photoOptions(){
+        final CharSequence[] options = {"View","Change","Cancel"};
+        AlertDialog.Builder photo = new AlertDialog.Builder(createAccount.this);
+        photo.setTitle("Photo Options");
+        photo.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(options[which].equals("View")){
+                    displayImage();
+                }
+                else if(options[which].equals("Change")) {
+                    selectImage();
+                }
+                else if(options[which].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        photo.show();
+    }
+
+    //for displaying image in center of screen
+    private void displayImage(){
+
+    }
+
     //functionality for taking/uploading a new photo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if(requestCode == 1){ //if wanting to take a new picture
-                bitmap = (Bitmap)data.getExtras().get("data");
+            //if wanting to take a new picture
+            if(requestCode == 1){
+                bitmap = (Bitmap) data.getExtras().get("data");
                 uploadImage.setImageBitmap(Bitmap.createScaledBitmap(bitmap,uploadImage.getWidth(),uploadImage.getHeight(),false));
-
-            } else if (requestCode == 2) { //if wanting to upload image from phone storage
+                filepath = data.getData();
+            }
+            //if wanting to upload image from phone storage
+            else if (requestCode == 2) {
                 Uri selectedImage = data.getData();
                 String[] filePath = { MediaStore.Images.Media.DATA };
                 Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
@@ -186,7 +248,9 @@ public class createAccount extends AppCompatActivity {
                 c.close();
                 bitmap = (BitmapFactory.decodeFile(picturePath));
                 uploadImage.setImageBitmap(Bitmap.createScaledBitmap(bitmap,uploadImage.getWidth(),uploadImage.getHeight(),false));
+                filepath = data.getData();
             }
+            uploadedPhoto = true;
         }
     }
 }

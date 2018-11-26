@@ -1,12 +1,16 @@
 package android.project;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -15,10 +19,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,17 +33,28 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.uber.sdk.android.core.UberSdk;
 import com.uber.sdk.core.auth.Scope;
 import com.uber.sdk.rides.client.SessionConfiguration;
 import com.uber.sdk.android.rides.RideRequestButton;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+
 public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
+    private ImageButton profilePhoto;
     private Toolbar myTool;
     private CardView cardView,cardView2,cardView3;
     private FirebaseAuth auth;
     private FirebaseUser user;
+    private StorageReference storageRef;
     private DatabaseReference myRef;
     private final String TAG = "Value recovered is ";
     private TextView testDisplay;
@@ -77,6 +95,25 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             }
         });
 
+        //pulling saved profile photo and displaying it on homepage
+        profilePhoto = (ImageButton) findViewById(R.id.homepagePhoto);
+        storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference photoLocation = storageRef.child("Images/Profile Photos/" + user.getUid() + "");
+        try {
+            final File localFile = File.createTempFile("images", "jpg");
+            photoLocation.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                    Bitmap myBitmap = Bitmap.createScaledBitmap(bitmap, profilePhoto.getWidth(), profilePhoto.getHeight(), true);
+                    profilePhoto.setImageBitmap(myBitmap);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //handles shaking the phone
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         shake = new Shake();
@@ -104,7 +141,6 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             }
         });
 
-
         cardView=findViewById(R.id.addContactButton);
         cardView2=findViewById(R.id.contactList);
         cardView3=findViewById(R.id.editProfile);
@@ -115,6 +151,19 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
         myTool = findViewById(R.id.mytoolbar);
         setSupportActionBar(myTool);
+
+        //loading dialog shows for 2 seconds while user info and profile photo is loaded
+        final ProgressDialog dialog = new ProgressDialog(HomePage.this);
+        dialog.setMessage("Loading Profile..");
+        dialog.setIndeterminate(true);
+        dialog.show();
+        final Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                dialog.dismiss(); // when the task active then close the dialog
+                t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+            }
+        }, 4000);
     }
 
 

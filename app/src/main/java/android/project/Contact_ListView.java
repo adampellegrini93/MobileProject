@@ -1,8 +1,10 @@
 package android.project;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
@@ -63,6 +66,7 @@ public class Contact_ListView extends AppCompatActivity {
 
         loadList();
 
+        //Handles single click on ListView items
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -77,6 +81,37 @@ public class Contact_ListView extends AppCompatActivity {
             }
         });
 
+        //Handles long click on ListView items
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Contact_ListView.this);
+                builder.setTitle("Contact options");
+                builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent myIntent = new Intent(Contact_ListView.this,EditInputContact.class);
+                        myIntent.putExtra("id", contacts.get(position).getIdentifier());
+                        myIntent.putExtra("name", contacts.get(position).getName());
+                        myIntent.putExtra("number", contacts.get(position).getNumber());
+                        myIntent.putExtra("image", contacts.get(position).getImage());
+                        myIntent.putExtra("geo", contacts.get(position).getLocation());
+                        startActivity(myIntent);
+                    }
+                });
+                builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(handler.delete(contacts.get(position).getIdentifier())){
+                            loadList();
+                        }
+                    }
+                });
+                builder.setNeutralButton("Cancel", null);
+                builder.show();
+                return true;
+            }
+        });
     }
 
     private void loadList(){
