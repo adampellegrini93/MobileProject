@@ -53,9 +53,13 @@ public class EditContact extends AppCompatActivity {
         imageView.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image2")));
 
 
-
         TextView locationView2 = findViewById(R.id.locationView2);
         locationView2.setText(extras.getString("geo"));
+
+        TextView DateView = findViewById(R.id.contactDateView2);
+        String date = extras.getString("date");
+        //Original date format is "CalendarDay{YYYY-MM-DD}"
+        DateView.setText(date.substring(12,date.length()-1));
 
 
         Button contactBack = findViewById(R.id.contactBack);

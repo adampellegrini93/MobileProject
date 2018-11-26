@@ -106,7 +106,28 @@
 
         </TableRow>
 
+        <TableRow
+            android:id="@+id/row4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
 
+            <TextView
+                android:id="@+id/contactDateView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date met:"
+                android:fontFamily="@font/amaranth"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/contactDateView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:fontFamily="@font/amaranth"
+                android:textSize="15sp" />
+        </TableRow>
 
 
     </TableLayout>

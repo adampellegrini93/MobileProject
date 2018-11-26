@@ -2,6 +2,7 @@ package android.project;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AlertDialog;
@@ -77,6 +78,7 @@ public class Contact_ListView extends AppCompatActivity {
                 myIntent.putExtra("image", contacts.get(position).getImage());
                 myIntent.putExtra("image2",contacts.get(position).getImage2());
                 myIntent.putExtra("geo", contacts.get(position).getLocation());
+                myIntent.putExtra("date",contacts.get(position).getDate());
                 startActivity(myIntent);
 
             }
@@ -86,30 +88,37 @@ public class Contact_ListView extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
+                final String[] options = {"Call", "Edit", "Delete", "Cancel"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(Contact_ListView.this);
                 builder.setTitle("Contact options");
-                builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent myIntent = new Intent(Contact_ListView.this,EditInputContact.class);
-                        myIntent.putExtra("id", contacts.get(position).getIdentifier());
-                        myIntent.putExtra("name", contacts.get(position).getName());
-                        myIntent.putExtra("number", contacts.get(position).getNumber());
-                        myIntent.putExtra("image", contacts.get(position).getImage());
-                        myIntent.putExtra("image2",contacts.get(position).getImage2());
-                        myIntent.putExtra("geo", contacts.get(position).getLocation());
-                        startActivity(myIntent);
-                    }
-                });
-                builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(handler.delete(contacts.get(position).getIdentifier())){
-                            loadList();
+                        if(options[which].matches("Call")){
+                            Intent intent = new Intent(Intent.ACTION_DIAL);
+                            intent.setData(Uri.parse("tel:"+contacts.get(position).getNumber()));
+                            startActivity(intent);
+                        }
+                        else if(options[which].matches("Edit")){
+                            Intent myIntent = new Intent(Contact_ListView.this,EditInputContact.class);
+                            myIntent.putExtra("id", contacts.get(position).getIdentifier());
+                            myIntent.putExtra("name", contacts.get(position).getName());
+                            myIntent.putExtra("number", contacts.get(position).getNumber());
+                            myIntent.putExtra("image", contacts.get(position).getImage());
+                            myIntent.putExtra("image2",contacts.get(position).getImage2());
+                            myIntent.putExtra("geo", contacts.get(position).getLocation());
+                            startActivity(myIntent);
+                        }
+                        else if(options[which].matches("Delete")){
+                            if(handler.delete(contacts.get(position).getIdentifier())){
+                                loadList();
+                            }
+                        }
+                        else if(options[which].matches("Cancel")){
+
                         }
                     }
                 });
-                builder.setNeutralButton("Cancel", null);
                 builder.show();
                 return true;
             }

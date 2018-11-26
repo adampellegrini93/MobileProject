@@ -50,6 +50,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -69,6 +70,7 @@ public class AddContact extends AppCompatActivity{
     private String number;
     private String image;
     private String geo;
+    private String date;
     String image2;
     private final String TAG = "testing location->";
     SharedPreferences locat;
@@ -172,6 +174,9 @@ public class AddContact extends AppCompatActivity{
                 image = picturePath;
                 image2 = p;
                 geo = destination;
+                //gets current date contact was created
+                //by default in format "CalendarDay{YYYY-MM-DD}"
+                date = CalendarDay.today().toString();
 
                 if (name.equals("") || number.equals("")) {
                     android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(AddContact.this);
@@ -188,6 +193,9 @@ public class AddContact extends AppCompatActivity{
                     contactInformation.setImage(image);
                     contactInformation.setImage2(image2);
                     contactInformation.setLocation(geo);
+
+                    //adding current date to contact info
+                    contactInformation.setDate(date);
 
                     Boolean added = handler.addContact(contactInformation);
                     if (added) {
@@ -237,7 +245,8 @@ public class AddContact extends AppCompatActivity{
         ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
                 .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactID)
                 .withValue(ContactsContract.Data.MIMETYPE, CommonDataKinds.Note.CONTENT_ITEM_TYPE)
-                .withValue(CommonDataKinds.Note.NOTE, "Contact added with Babelaas application")
+                .withValue(CommonDataKinds.Note.NOTE, "Contact met in " + geo
+                + " on " + date.substring(12,date.length()-1) + ". Added with Babelaas app")
                 .build());
         try{
             // Executing all the insert operations as a single database transaction

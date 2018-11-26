@@ -8,18 +8,20 @@ public class ContactInformation {
     private String _image;
     private String _image2;
     private String _location;
+    private String _date;
 
 
     public ContactInformation(){
 
     }
 
-    public ContactInformation(String name, String number, String image, String image2, String geo){
+    public ContactInformation(String name, String number, String image, String image2, String geo, String date){
         this._name=name;
         this._number=number;
         this._image=image;
         this._image2 =image2;
         this._location=geo;
+        this._date=date;
     }
 
     public int getIdentifier(){
@@ -33,7 +35,6 @@ public class ContactInformation {
     }
     public void setName(String name){
         this._name=name;
-
     }
     public String getNumber(){
         return this._number;
@@ -51,4 +52,6 @@ public class ContactInformation {
     public void setImage2(String image2){this._image2=image2;}
     public String getLocation(){return this._location;}
     public void setLocation(String geo){this._location=geo;}
+    public String getDate(){return this._date;}
+    public void setDate(String date){this._date=date;}
 }

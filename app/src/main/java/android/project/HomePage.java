@@ -35,7 +35,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.uber.sdk.android.core.UberSdk;
 import com.uber.sdk.core.auth.Scope;
 import com.uber.sdk.rides.client.SessionConfiguration;
@@ -43,6 +45,7 @@ import com.uber.sdk.android.rides.RideRequestButton;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -78,8 +81,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
         //pulling the logged in user
         user = auth.getCurrentUser();
-
-        //pulling database name that was stored and placing it in the welcome TextView
+        /*
         testDisplay = findViewById(R.id.testTextView);
         myRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("name");
         myRef.addValueEventListener(new ValueEventListener() {
@@ -95,6 +97,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
             }
         });
+        */
 
         //pulling saved profile photo and displaying it on homepage
         profilePhoto = (ImageButton) findViewById(R.id.homepagePhoto);
@@ -157,7 +160,33 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
         //handles the calendar
         calendar = (MaterialCalendarView) findViewById(R.id.calendarView);
-        calendar.addDecorator(new CurrentDateDecorator(this));
+        //calendar.addDecorator(new CurrentDateDecorator(this));
+        final NewContactDateDecorator decorator = new NewContactDateDecorator(this);
+        calendar.addDecorator(decorator);
+        calendar.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView materialCalendarView, @NonNull CalendarDay calendarDay, boolean b) {
+                if(decorator.isDateImportant(calendarDay)){
+                    String displayDate = calendarDay.toString().substring(12,calendarDay.toString().length()-1);
+                    Toast.makeText(getBaseContext(), "Met "+ decorator.getNames(calendarDay)+" on: " + displayDate, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //pulling amount of contacts added in current month and displays in TextView
+        testDisplay = findViewById(R.id.testTextView);
+        int contactCount = decorator.contactsAdded(CalendarDay.today());
+        switch(contactCount){
+            case 0:
+                testDisplay.setText("You haven't added any new contacts this month yet.");
+                break;
+            case 1:
+                testDisplay.setText("You've added " + contactCount + " new contact this month!!");
+                break;
+            default:
+                testDisplay.setText("You've added " + contactCount + " new contacts this month!!");
+                break;
+        }
     }
 
 
