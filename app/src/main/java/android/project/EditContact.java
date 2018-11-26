@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ import java.util.Locale;
 public class EditContact extends AppCompatActivity {
 
     Bundle extras;
-
+    private String number = "";
     private Handler handler;
 
     @Override
@@ -44,6 +45,7 @@ public class EditContact extends AppCompatActivity {
 
         TextView contactNumberView2 = findViewById(R.id.contactNumberView2);
         contactNumberView2.setText(extras.getString("number"));
+        number = contactNumberView2.getText().toString();
 
         ImageView imageView = findViewById(R.id.imageView);
 
@@ -69,9 +71,10 @@ public class EditContact extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        menu.add(1, 1, 0, "Edit Contact");
-        menu.add(1,2,1,"Delete Contact");
-        menu.add(1,3,2,"HomePage");
+        menu.add(1, 1, 0, "Call Contact");
+        menu.add(1, 2, 1, "Edit Contact");
+        menu.add(1,3,2,"Delete Contact");
+        menu.add(1,4,3,"HomePage");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -81,15 +84,20 @@ public class EditContact extends AppCompatActivity {
 
         switch (iden){
             case 1:
-                edit();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+number));
+                startActivity(intent);
                 break;
             case 2:
+                edit();
+                break;
+            case 3:
                 if(handler.delete(extras.getInt("id"))){
                     Intent myIntent = new Intent(EditContact.this,Contact_ListView.class);
                     startActivity(myIntent);
                 }
                 break;
-            case 3:
+            case 4:
                 Intent myIntent = new Intent(EditContact.this,HomePage.class);
                 startActivity(myIntent);
                 break;

@@ -2,9 +2,11 @@ package android.project;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,6 +19,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds;
+import android.provider.ContactsContract.CommonDataKinds.Email;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.CommonDataKinds.StructuredName;
+import android.provider.ContactsContract.RawContacts;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -45,6 +54,7 @@ import com.google.android.gms.tasks.Task;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -181,6 +191,7 @@ public class AddContact extends AppCompatActivity{
 
                     Boolean added = handler.addContact(contactInformation);
                     if (added) {
+                        addToPhoneContacts();
                         Intent myIntent = new Intent(AddContact.this, Contact_ListView.class);
                         startActivity(myIntent);
                         finish();
@@ -190,6 +201,53 @@ public class AddContact extends AppCompatActivity{
                 }
             }
         });
+    }
+
+    //adds the created contact into the phone's contact book
+    private void addToPhoneContacts(){
+        ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+        int rawContactID = ops.size();
+
+        // Adding insert operation to operations list
+        // to insert a new raw contact in the table ContactsContract.RawContacts
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                .build());
+
+        // Adding insert operation to operations list
+        // to insert display name in the table ContactsContract.Data
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactID)
+                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name)
+                .build());
+
+        // Adding insert operation to operations list
+        // to insert Mobile Number in the table ContactsContract.Data
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactID)
+                .withValue(ContactsContract.Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE)
+                .withValue(Phone.NUMBER, number)
+                .withValue(Phone.TYPE, CommonDataKinds.Phone.TYPE_MOBILE)
+                .build());
+
+        // Adding insert operation to operations list
+        // to insert Babelaas note in the table ContactsContract.Data
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactID)
+                .withValue(ContactsContract.Data.MIMETYPE, CommonDataKinds.Note.CONTENT_ITEM_TYPE)
+                .withValue(CommonDataKinds.Note.NOTE, "Contact added with Babelaas application")
+                .build());
+        try{
+            // Executing all the insert operations as a single database transaction
+            getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+            //Toast.makeText(getBaseContext(), "Contact is successfully added", Toast.LENGTH_SHORT).show();
+        }catch (RemoteException e) {
+            e.printStackTrace();
+        }catch (OperationApplicationException e) {
+            e.printStackTrace();
+        }
     }
 
     //creates pop up box with photo upload options

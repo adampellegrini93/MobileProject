@@ -44,10 +44,8 @@ public class EditInputContact extends AppCompatActivity {
         final EditText getContactNumber = findViewById(R.id.getContactNumber);
         getContactNumber.setText(extras.getString("number"));
         uploadContactImage = findViewById(R.id.uploadContactImage);
-
-            uploadContactImage.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image")));
-
-            uploadContactImage.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image2")));
+        uploadContactImage.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image")));
+        uploadContactImage.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image2")));
 
         uploadContactImage.setOnClickListener(new View.OnClickListener() {
             @Override
