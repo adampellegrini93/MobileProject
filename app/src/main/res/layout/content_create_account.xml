@@ -82,7 +82,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="258dp"
             android:backgroundTint="@color/white"
-            android:drawableLeft="@drawable/ic_person_outline_black_24dp"
+            android:drawableLeft="@drawable/ic_person_outline_white_24dp"
             android:fontFamily="@font/amaranth"
             android:hint="Please Enter Your Full Name"
             android:inputType="textPersonName"

@@ -54,7 +54,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
     private ImageButton profilePhoto;
     private Toolbar myTool;
-    private CardView cardView,cardView2,cardView3;
+    private CardView cardView,cardView2;
     private MaterialCalendarView calendar;
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -150,11 +150,11 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
         cardView=findViewById(R.id.addContactButton);
         cardView2=findViewById(R.id.contactList);
-        cardView3=findViewById(R.id.editProfile);
+
 
         cardView.setOnClickListener(this);
         cardView2.setOnClickListener(this);
-        cardView3.setOnClickListener(this);
+
 
         myTool = findViewById(R.id.mytoolbar);
         setSupportActionBar(myTool);

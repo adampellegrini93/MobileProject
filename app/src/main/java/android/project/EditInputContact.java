@@ -1,6 +1,7 @@
 package android.project;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,16 +10,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 
 public class EditInputContact extends AppCompatActivity {
 
@@ -26,6 +30,10 @@ public class EditInputContact extends AppCompatActivity {
     private String picturePath="";
     private String p="";
     ImageButton uploadContactImage;
+    private final int REQ = 100;
+    private final int NUM = 101;
+    EditText getContactName;
+    EditText getContactNumber;
 
     Bundle extras;
 
@@ -38,10 +46,27 @@ public class EditInputContact extends AppCompatActivity {
 
         handler = new Handler(getApplicationContext());
 
+        final ImageView nameMic = findViewById(R.id.nameMic);
+        nameMic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speech();
+            }
+        });
 
-        final EditText getContactName = findViewById(R.id.getContactName);
+        final ImageView numberMic = findViewById(R.id.numberMic);
+        numberMic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speechNumber();
+            }
+        });
+
+
+
+        getContactName = findViewById(R.id.getContactName);
         getContactName.setText(extras.getString("name"));
-        final EditText getContactNumber = findViewById(R.id.getContactNumber);
+        getContactNumber = findViewById(R.id.getContactNumber);
         getContactNumber.setText(extras.getString("number"));
         uploadContactImage = findViewById(R.id.uploadContactImage);
         uploadContactImage.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image")));
@@ -141,6 +166,27 @@ public class EditInputContact extends AppCompatActivity {
 
             }
         }
+
+        switch(requestCode){
+            case REQ:{
+                if(resultCode == RESULT_OK && null != data){
+                    ArrayList<String> arrayList = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    String voiceInput = arrayList.get(0);
+                    getContactName.setText(voiceInput);
+                }
+                break;
+            }
+            case NUM:{
+                if(resultCode == RESULT_OK && null != data){
+                    ArrayList<String> arrayList = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    String voiceInput = arrayList.get(0);
+                    getContactNumber.setText(voiceInput);
+                }
+                break;
+            }
+        }
     }
 
     public Uri getUri(Context context, Bitmap image){
@@ -161,6 +207,32 @@ public class EditInputContact extends AppCompatActivity {
             }
         }
         return p;
+    }
+
+    //handles speech to text for both name and number
+    private void speech(){
+        Intent intent1 = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent1.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent1.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+
+        try{
+            startActivityForResult(intent1, REQ);
+        }catch (ActivityNotFoundException err){
+
+        }
+
+    }
+    private void speechNumber(){
+        Intent intent2 = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent2.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent2.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+
+        try{
+            startActivityForResult(intent2, NUM);
+        }catch (ActivityNotFoundException err){
+
+        }
+
     }
 
 }

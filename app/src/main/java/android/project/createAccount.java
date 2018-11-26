@@ -244,7 +244,6 @@ public class createAccount extends AppCompatActivity {
 
                 File file = new File(getPath(uri));
 
-
             }
             //if wanting to upload image from phone storage
             else if (requestCode == 2) {
