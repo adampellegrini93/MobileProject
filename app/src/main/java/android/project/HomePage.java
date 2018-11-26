@@ -35,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.uber.sdk.android.core.UberSdk;
 import com.uber.sdk.core.auth.Scope;
 import com.uber.sdk.rides.client.SessionConfiguration;
@@ -51,6 +52,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     private ImageButton profilePhoto;
     private Toolbar myTool;
     private CardView cardView,cardView2,cardView3;
+    private MaterialCalendarView calendar;
     private FirebaseAuth auth;
     private FirebaseUser user;
     private StorageReference storageRef;
@@ -96,6 +98,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
         //pulling saved profile photo and displaying it on homepage
         profilePhoto = (ImageButton) findViewById(R.id.homepagePhoto);
+        profilePhoto.setVisibility(View.INVISIBLE);
         storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference photoLocation = storageRef.child("Images/Profile Photos/" + user.getUid() + "");
         try {
@@ -106,6 +109,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                     Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                     Bitmap myBitmap = Bitmap.createScaledBitmap(bitmap, profilePhoto.getWidth(), profilePhoto.getHeight(), true);
                     profilePhoto.setImageBitmap(myBitmap);
+                    profilePhoto.setVisibility(View.VISIBLE);
                 }
             });
         } catch (IOException e) {
@@ -151,18 +155,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         myTool = findViewById(R.id.mytoolbar);
         setSupportActionBar(myTool);
 
-        //loading dialog shows for 2 seconds while user info and profile photo is loaded
-        final ProgressDialog dialog = new ProgressDialog(HomePage.this);
-        dialog.setMessage("Loading Profile..");
-        dialog.setIndeterminate(true);
-        dialog.show();
-        final Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            public void run() {
-                dialog.dismiss(); // when the task active then close the dialog
-                t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
-            }
-        }, 4000);
+        //handles the calendar
+        calendar = (MaterialCalendarView) findViewById(R.id.calendarView);
+        calendar.addDecorator(new CurrentDateDecorator(this));
     }
 
 
