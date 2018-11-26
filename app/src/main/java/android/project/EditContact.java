@@ -46,7 +46,11 @@ public class EditContact extends AppCompatActivity {
         contactNumberView2.setText(extras.getString("number"));
 
         ImageView imageView = findViewById(R.id.imageView);
+
         imageView.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image")));
+        imageView.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image2")));
+
+
 
         TextView locationView2 = findViewById(R.id.locationView2);
         locationView2.setText(extras.getString("geo"));

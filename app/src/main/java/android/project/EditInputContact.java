@@ -1,6 +1,7 @@
 package android.project;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,10 +17,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+
 public class EditInputContact extends AppCompatActivity {
 
     private Handler handler;
     private String picturePath="";
+    private String p="";
     ImageButton uploadContactImage;
 
     Bundle extras;
@@ -39,7 +44,10 @@ public class EditInputContact extends AppCompatActivity {
         final EditText getContactNumber = findViewById(R.id.getContactNumber);
         getContactNumber.setText(extras.getString("number"));
         uploadContactImage = findViewById(R.id.uploadContactImage);
-        uploadContactImage.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image")));
+
+            uploadContactImage.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image")));
+
+            uploadContactImage.setImageBitmap(BitmapFactory.decodeFile(extras.getString("image2")));
 
         uploadContactImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +77,7 @@ public class EditInputContact extends AppCompatActivity {
                     contactInformation.setName(getContactName.getText().toString());
                     contactInformation.setNumber(getContactNumber.getText().toString());
                     contactInformation.setImage(picturePath);
+                    contactInformation.setImage2(p);
 
                     boolean update = handler.edit(contactInformation);
                     if (update) {
@@ -117,6 +126,9 @@ public class EditInputContact extends AppCompatActivity {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uploadContactImage.setImageBitmap(Bitmap.createScaledBitmap(bitmap, uploadContactImage.getWidth(), uploadContactImage.getHeight(), false));
 
+                Uri uri = getUri(getApplicationContext(),bitmap);
+
+                File file = new File(getPath(uri));
 
             } else if (requestCode == 2) { //if wanting to upload image from phone storage
                 Uri selectedImage = data.getData();
@@ -132,4 +144,25 @@ public class EditInputContact extends AppCompatActivity {
             }
         }
     }
+
+    public Uri getUri(Context context, Bitmap image){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG,100, byteArrayOutputStream);
+        String p = MediaStore.Images.Media.insertImage(context.getContentResolver(),image,"Title",null);
+        return Uri.parse(p);
+    }
+
+    public String getPath(Uri uri) {
+        if (getContentResolver() != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                p = cursor.getString(index);
+                cursor.close();
+            }
+        }
+        return p;
+    }
+
 }

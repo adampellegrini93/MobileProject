@@ -42,6 +42,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -52,10 +54,12 @@ public class AddContact extends AppCompatActivity{
     private Handler handler;
     private ImageButton uploadImage;
     private String picturePath="";
+    private String p="";
     private String name;
     private String number;
     private String image;
     private String geo;
+    String image2;
     private final String TAG = "testing location->";
     SharedPreferences locat;
     SharedPreferences.Editor editor;
@@ -136,11 +140,12 @@ public class AddContact extends AppCompatActivity{
 
 
         //handles upload image button click
-        uploadImage = (ImageButton) findViewById(R.id.uploadContactImage);
+        uploadImage = findViewById(R.id.uploadContactImage);
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectImage();
+
             }
         });
 
@@ -155,6 +160,7 @@ public class AddContact extends AppCompatActivity{
                 EditText getContactNumber = (EditText) findViewById(R.id.getContactNumber);
                 number = getContactNumber.getText().toString();
                 image = picturePath;
+                image2 = p;
                 geo = destination;
 
                 if (name.equals("") || number.equals("")) {
@@ -170,6 +176,7 @@ public class AddContact extends AppCompatActivity{
                     contactInformation.setName(name);
                     contactInformation.setNumber(number);
                     contactInformation.setImage(image);
+                    contactInformation.setImage2(image2);
                     contactInformation.setLocation(geo);
 
                     Boolean added = handler.addContact(contactInformation);
@@ -216,6 +223,10 @@ public class AddContact extends AppCompatActivity{
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uploadImage.setImageBitmap(Bitmap.createScaledBitmap(bitmap, uploadImage.getWidth(), uploadImage.getHeight(), false));
 
+                Uri uri = getUri(getApplicationContext(),bitmap);
+
+                File file = new File(getPath(uri));
+
 
             } else if (requestCode == 2) { //if wanting to upload image from phone storage
                 Uri selectedImage = data.getData();
@@ -231,6 +242,28 @@ public class AddContact extends AppCompatActivity{
             }
         }
     }
+
+    public Uri getUri(Context context, Bitmap image){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG,100, byteArrayOutputStream);
+        String p = MediaStore.Images.Media.insertImage(context.getContentResolver(),image,"Title",null);
+        return Uri.parse(p);
+    }
+
+    public String getPath(Uri uri) {
+        if (getContentResolver() != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                p = cursor.getString(index);
+                cursor.close();
+            }
+        }
+        return p;
+    }
+
+
 
     //setup for up pulling current gps location
     LocationListener locationListener = new LocationListener() {

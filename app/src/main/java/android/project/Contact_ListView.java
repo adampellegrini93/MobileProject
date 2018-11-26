@@ -75,6 +75,7 @@ public class Contact_ListView extends AppCompatActivity {
                 myIntent.putExtra("name", contacts.get(position).getName());
                 myIntent.putExtra("number", contacts.get(position).getNumber());
                 myIntent.putExtra("image", contacts.get(position).getImage());
+                myIntent.putExtra("image2",contacts.get(position).getImage2());
                 myIntent.putExtra("geo", contacts.get(position).getLocation());
                 startActivity(myIntent);
 
@@ -157,6 +158,25 @@ public class Contact_ListView extends AppCompatActivity {
         startActivity(new Intent(Contact_ListView.this, HomePage.class));
         finish();
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+    }
+
 
 }
 
