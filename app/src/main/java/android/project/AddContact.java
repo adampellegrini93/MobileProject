@@ -268,11 +268,14 @@ public class AddContact extends AppCompatActivity{
 
         // Adding insert operation to operations list
         // to insert Babelaas note in the table ContactsContract.Data
+        String Tempdate = date.toString().substring(12,date.toString().length()-1);
+        int month = Integer.parseInt(Tempdate.substring(5,7)) + 1;
+        String displayDate = Tempdate.substring(0,5) + month + Tempdate.substring(7,Tempdate.length());
         ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
                 .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactID)
                 .withValue(ContactsContract.Data.MIMETYPE, CommonDataKinds.Note.CONTENT_ITEM_TYPE)
                 .withValue(CommonDataKinds.Note.NOTE, "Contact met in " + geo
-                + " on " + date.substring(12,date.length()-1) + ". Added with Babelaas app")
+                + " on " + displayDate + ". Added with Babelaas app")
                 .build());
         try{
             // Executing all the insert operations as a single database transaction

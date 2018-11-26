@@ -168,7 +168,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView materialCalendarView, @NonNull CalendarDay calendarDay, boolean b) {
                 if(decorator.isDateImportant(calendarDay)){
-                    String displayDate = calendarDay.toString().substring(12,calendarDay.toString().length()-1);
+                    String Date = calendarDay.toString().substring(12,calendarDay.toString().length()-1);
+                    int month = Integer.parseInt(Date.substring(5,7)) + 1;
+                    String displayDate = Date.substring(0,5) + month + Date.substring(7,Date.length());
                     Toast.makeText(getBaseContext(), "Met "+ decorator.getNames(calendarDay)+" on: " + displayDate, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -228,8 +230,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             signOut.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    //this is where we will handle sign out functionality
-                    //right now it will just return user to main screen and close current page
+                    auth.signOut();
                     startActivity(new Intent(HomePage.this, MainActivity.class));
                     finish();
                 }
@@ -237,7 +238,6 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
             signOut.setNegativeButton("No",null);
             signOut.setCancelable(true);
             signOut.create().show();
-            auth.signOut();
             return true;
         }
 
@@ -252,8 +252,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         signOut.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //this is where we will handle sign out functionality
-                //right now it will just return user to main screen and close current page
+                auth.signOut();
                 startActivity(new Intent(HomePage.this, MainActivity.class));
                 finish();
             }
@@ -261,7 +260,6 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
         signOut.setNegativeButton("No",null);
         signOut.setCancelable(true);
         signOut.create().show();
-        auth.signOut();
     }
 
     @Override

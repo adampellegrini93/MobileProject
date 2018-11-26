@@ -7,7 +7,7 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="info" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -18,12 +18,10 @@
     <list default="true" id="5c966840-3ccb-4ab1-a4be-556b68293f0c" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/MobileProject.iws" beforeDir="false" afterPath="$PROJECT_DIR$/MobileProject.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/android/project/AddContact.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/android/project/AddContact.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/android/project/ContactInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/android/project/ContactInformation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/android/project/Contact_ListView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/android/project/Contact_ListView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/android/project/EditContact.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/android/project/EditContact.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/android/project/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/android/project/Handler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/android/project/HomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/android/project/HomePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout-v21/content_home_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout-v21/content_home_page.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/android/project/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/android/project/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_edit_contact.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_edit_contact.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -48,15 +46,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="442">
+              <caret line="182" column="93" selection-start-line="182" selection-start-column="93" selection-end-line="182" selection-end-column="93" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="AddContact.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/AddContact.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="249" column="26" selection-start-line="249" selection-start-column="26" selection-end-line="249" selection-end-column="26" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#7382#7408#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="323">
+              <caret line="272" column="71" selection-start-line="272" selection-start-column="71" selection-end-line="272" selection-end-column="71" />
             </state>
           </provider>
         </entry>
@@ -64,9 +70,25 @@
       <file leaf-file-name="EditContact.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/EditContact.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="60" column="31" selection-start-line="60" selection-start-column="31" selection-end-line="60" selection-end-column="31" />
+            <state relative-caret-position="272">
+              <caret line="64" column="38" selection-start-line="64" selection-start-column="38" selection-end-line="64" selection-end-column="38" />
+              <folding>
+                <element signature="e#2737#3014#0" expanded="true" />
+                <element signature="e#3013#3014#0" expanded="true" />
+              </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="147">
+              <caret line="10" column="72" selection-start-line="10" selection-start-column="72" selection-end-line="10" selection-end-column="72" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-manifest">
+            <state />
           </provider>
         </entry>
       </file>
@@ -76,17 +98,17 @@
             <state />
           </provider>
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="580">
-              <caret line="127" column="51" selection-start-line="127" selection-start-column="51" selection-end-line="127" selection-end-column="51" />
+            <state relative-caret-position="466">
+              <caret line="133" column="36" selection-start-line="133" selection-start-column="36" selection-end-line="133" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Contact_ListView.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Contact_ListView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/Contact_ListView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="128" selection-start-line="128" selection-end-line="128" />
+            <state relative-caret-position="304">
+              <caret line="117" column="43" selection-start-line="117" selection-start-column="43" selection-end-line="117" selection-end-column="43" />
               <folding>
                 <element signature="e#2293#3080#0" expanded="true" />
                 <element signature="e#3079#3080#0" expanded="true" />
@@ -94,27 +116,28 @@
                 <element signature="e#3647#5452#0" expanded="true" />
                 <element signature="e#5451#5452#0" expanded="true" />
                 <element signature="e#5538#5539#0" expanded="true" />
+                <element signature="method#loadList#0;class#Contact_ListView#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HomePage.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HomePage.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/HomePage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="188" column="9" selection-start-line="188" selection-start-column="9" selection-end-line="188" selection-end-column="9" />
+            <state relative-caret-position="239">
+              <caret line="170" column="20" selection-start-line="170" selection-start-column="20" selection-end-line="172" selection-end-column="103" />
               <folding>
-                <element signature="e#4217#4757#0" expanded="true" />
-                <element signature="e#4756#4757#0" expanded="true" />
-                <element signature="e#5093#6161#0" expanded="true" />
-                <element signature="e#6160#6161#0" expanded="true" />
-                <element signature="e#6877#7426#0" expanded="true" />
-                <element signature="e#7425#7426#0" expanded="true" />
-                <element signature="e#9256#9707#0" expanded="true" />
-                <element signature="e#9706#9707#0" expanded="true" />
-                <element signature="e#10228#10647#0" expanded="true" />
-                <element signature="e#10646#10647#0" expanded="true" />
+                <element signature="e#4220#4760#0" expanded="true" />
+                <element signature="e#4759#4760#0" expanded="true" />
+                <element signature="e#5096#6164#0" expanded="true" />
+                <element signature="e#6163#6164#0" expanded="true" />
+                <element signature="e#6788#7330#0" expanded="true" />
+                <element signature="e#7329#7330#0" expanded="true" />
+                <element signature="e#9111#9562#0" expanded="true" />
+                <element signature="e#9561#9562#0" expanded="true" />
+                <element signature="e#10083#10502#0" expanded="true" />
+                <element signature="e#10501#10502#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -126,38 +149,8 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="97" column="37" selection-start-line="97" selection-start-column="37" selection-end-line="97" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CurrentDateDecorator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/CurrentDateDecorator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="25" selection-start-line="25" selection-end-line="25" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#682#683#0" expanded="true" />
-                <element signature="e#720#721#0" expanded="true" />
-                <element signature="e#787#788#0" expanded="true" />
-                <element signature="e#841#842#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NewContactDateDecorator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/NewContactDateDecorator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
-              <caret line="61" column="24" selection-start-line="61" selection-start-column="24" selection-end-line="61" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2476#2477#0" expanded="true" />
-                <element signature="e#2518#2519#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="347">
+              <caret line="112" column="37" selection-start-line="112" selection-start-column="37" selection-end-line="112" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -2470,18 +2463,18 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_add_contact.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/project/EditInputContact.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/android/project/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/project/CurrentDateDecorator.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/project/NewContactDateDecoraotr.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-v21/content_home_page.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/project/ContactInformation.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/android/project/Contact_ListView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_edit_contact.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/project/Handler.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/android/project/EditContact.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/android/project/AddContact.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/project/NewContactDateDecorator.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/project/HomePage.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_edit_contact.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/android/project/EditContact.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/android/project/AddContact.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/android/project/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/android/project/Contact_ListView.java" />
       </list>
     </option>
   </component>
@@ -2722,7 +2715,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543205552743</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="dates are shown on calendar when contacts are added. shows who was added when date is clicked. and contact stored in phone memory has date and location.">
+      <created>1543249313723</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1543249313723</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2736,7 +2736,7 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
       <window_info anchor="right" id="Assistant" weight="0.17910448" />
-      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.22346368" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.22346368" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" />
@@ -2745,9 +2745,9 @@
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="right" id="Preview" weight="0.32995737" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" weight="0.26256984" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.25698325" />
+      <window_info anchor="right" id="Preview" weight="0.3672708" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" visible="true" weight="0.26256984" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.20893855" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Captures" order="2" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15298508" />
@@ -2770,7 +2770,8 @@
     <MESSAGE value="profile photo is displayed on homepage" />
     <MESSAGE value="highlights current day on calendar" />
     <MESSAGE value="contact is saved to phone contact book, and added contact call option" />
-    <option name="LAST_COMMIT_MESSAGE" value="contact is saved to phone contact book, and added contact call option" />
+    <MESSAGE value="dates are shown on calendar when contacts are added. shows who was added when date is clicked. and contact stored in phone memory has date and location." />
+    <option name="LAST_COMMIT_MESSAGE" value="dates are shown on calendar when contacts are added. shows who was added when date is clicked. and contact stored in phone memory has date and location." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/MainActivity.java">
@@ -2864,16 +2865,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="18" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/EditInputContact.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -2901,33 +2892,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="178" column="39" selection-start-line="178" selection-start-column="39" selection-end-line="178" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-v21/content_home_page.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="97" column="37" selection-start-line="97" selection-start-column="37" selection-end-line="97" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_edit_contact.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="127" column="51" selection-start-line="127" selection-start-column="51" selection-end-line="127" selection-end-column="51" />
+        <state relative-caret-position="347">
+          <caret line="112" column="37" selection-start-line="112" selection-start-column="37" selection-end-line="112" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -2941,21 +2912,6 @@
             <element signature="e#720#721#0" expanded="true" />
             <element signature="e#787#788#0" expanded="true" />
             <element signature="e#841#842#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/Contact_ListView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="128" selection-start-line="128" selection-end-line="128" />
-          <folding>
-            <element signature="e#2293#3080#0" expanded="true" />
-            <element signature="e#3079#3080#0" expanded="true" />
-            <element signature="e#3199#5539#0" expanded="true" />
-            <element signature="e#3647#5452#0" expanded="true" />
-            <element signature="e#5451#5452#0" expanded="true" />
-            <element signature="e#5538#5539#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2974,24 +2930,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/EditContact.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="60" column="31" selection-start-line="60" selection-start-column="31" selection-end-line="60" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/AddContact.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="249" column="26" selection-start-line="249" selection-start-column="26" selection-end-line="249" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#7382#7408#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/NewContactDateDecorator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="490">
@@ -3006,19 +2944,83 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/HomePage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="188" column="9" selection-start-line="188" selection-start-column="9" selection-end-line="188" selection-end-column="9" />
+        <state relative-caret-position="239">
+          <caret line="170" column="20" selection-start-line="170" selection-start-column="20" selection-end-line="172" selection-end-column="103" />
           <folding>
-            <element signature="e#4217#4757#0" expanded="true" />
-            <element signature="e#4756#4757#0" expanded="true" />
-            <element signature="e#5093#6161#0" expanded="true" />
-            <element signature="e#6160#6161#0" expanded="true" />
-            <element signature="e#6877#7426#0" expanded="true" />
-            <element signature="e#7425#7426#0" expanded="true" />
-            <element signature="e#9256#9707#0" expanded="true" />
-            <element signature="e#9706#9707#0" expanded="true" />
-            <element signature="e#10228#10647#0" expanded="true" />
-            <element signature="e#10646#10647#0" expanded="true" />
+            <element signature="e#4220#4760#0" expanded="true" />
+            <element signature="e#4759#4760#0" expanded="true" />
+            <element signature="e#5096#6164#0" expanded="true" />
+            <element signature="e#6163#6164#0" expanded="true" />
+            <element signature="e#6788#7330#0" expanded="true" />
+            <element signature="e#7329#7330#0" expanded="true" />
+            <element signature="e#9111#9562#0" expanded="true" />
+            <element signature="e#9561#9562#0" expanded="true" />
+            <element signature="e#10083#10502#0" expanded="true" />
+            <element signature="e#10501#10502#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_edit_contact.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="133" column="36" selection-start-line="133" selection-start-column="36" selection-end-line="133" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/AddContact.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="272" column="71" selection-start-line="272" selection-start-column="71" selection-end-line="272" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/EditContact.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="64" column="38" selection-start-line="64" selection-start-column="38" selection-end-line="64" selection-end-column="38" />
+          <folding>
+            <element signature="e#2737#3014#0" expanded="true" />
+            <element signature="e#3013#3014#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="10" column="72" selection-start-line="10" selection-start-column="72" selection-end-line="10" selection-end-column="72" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="182" column="93" selection-start-line="182" selection-start-column="93" selection-end-line="182" selection-end-column="93" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/project/Contact_ListView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="117" column="43" selection-start-line="117" selection-start-column="43" selection-end-line="117" selection-end-column="43" />
+          <folding>
+            <element signature="e#2293#3080#0" expanded="true" />
+            <element signature="e#3079#3080#0" expanded="true" />
+            <element signature="e#3199#5539#0" expanded="true" />
+            <element signature="e#3647#5452#0" expanded="true" />
+            <element signature="e#5451#5452#0" expanded="true" />
+            <element signature="e#5538#5539#0" expanded="true" />
+            <element signature="method#loadList#0;class#Contact_ListView#0" />
           </folding>
         </state>
       </provider>

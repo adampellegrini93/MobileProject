@@ -57,9 +57,12 @@ public class EditContact extends AppCompatActivity {
         locationView2.setText(extras.getString("geo"));
 
         TextView DateView = findViewById(R.id.contactDateView2);
-        String date = extras.getString("date");
+        String tempDate = extras.getString("date");
         //Original date format is "CalendarDay{YYYY-MM-DD}"
-        DateView.setText(date.substring(12,date.length()-1));
+        String date = tempDate.toString().substring(12,tempDate.toString().length()-1);
+        int month = Integer.parseInt(date.substring(5,7)) + 1;
+        String displayDate = date.substring(0,5) + month + date.substring(7,date.length());
+        DateView.setText(displayDate);
 
 
         Button contactBack = findViewById(R.id.contactBack);
@@ -71,14 +74,23 @@ public class EditContact extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
+        Button contactCall = findViewById(R.id.contactCall);
+        contactCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+number));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        menu.add(1, 1, 0, "Call Contact");
-        menu.add(1, 2, 1, "Edit Contact");
-        menu.add(1,3,2,"Delete Contact");
-        menu.add(1,4,3,"HomePage");
+        menu.add(1, 1, 0, "Edit Contact");
+        menu.add(1,2,1,"Delete Contact");
+        menu.add(1,3,2,"HomePage");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -88,20 +100,15 @@ public class EditContact extends AppCompatActivity {
 
         switch (iden){
             case 1:
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:"+number));
-                startActivity(intent);
-                break;
-            case 2:
                 edit();
                 break;
-            case 3:
+            case 2:
                 if(handler.delete(extras.getInt("id"))){
                     Intent myIntent = new Intent(EditContact.this,Contact_ListView.class);
                     startActivity(myIntent);
                 }
                 break;
-            case 4:
+            case 3:
                 Intent myIntent = new Intent(EditContact.this,HomePage.class);
                 startActivity(myIntent);
                 break;
