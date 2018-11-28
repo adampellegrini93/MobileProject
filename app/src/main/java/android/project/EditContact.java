@@ -2,27 +2,18 @@ package android.project;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 public class EditContact extends AppCompatActivity {
 
@@ -103,7 +94,8 @@ public class EditContact extends AppCompatActivity {
                 edit();
                 break;
             case 2:
-                if(handler.delete(extras.getInt("id"))){
+                if(handler.delete(extras.getInt("id"))
+                        && deleteContact(getApplicationContext(),extras.getString("number"),extras.getString("name"))){
                     Intent myIntent = new Intent(EditContact.this,Contact_ListView.class);
                     startActivity(myIntent);
                 }
@@ -122,5 +114,27 @@ public class EditContact extends AppCompatActivity {
         Intent myIntent = new Intent(EditContact.this,EditInputContact.class);
         myIntent.putExtras(extras);
         startActivity(myIntent);
+    }
+
+    public static boolean deleteContact(Context ctx, String phone, String name) {
+        Uri contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phone));
+        Cursor cur = ctx.getContentResolver().query(contactUri, null, null, null, null);
+        try {
+            if (cur.moveToFirst()) {
+                do {
+                    if (cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)).equalsIgnoreCase(name)) {
+                        String lookupKey = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
+                        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey);
+                        ctx.getContentResolver().delete(uri, null, null);
+                        return true;
+                    }
+                } while (cur.moveToNext());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getStackTrace());
+        } finally {
+            cur.close();
+        }
+        return false;
     }
 }

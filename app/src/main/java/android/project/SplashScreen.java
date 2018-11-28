@@ -1,12 +1,15 @@
 package android.project;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashScreen extends AppCompatActivity {
 
+    private FirebaseAuth auth;
     private static int SPLASH_TIME_OUT = 2500;
 
     @Override
@@ -14,15 +17,22 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        //displays splash screen for 2.5 seconds upon app opening
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent splash = new Intent(SplashScreen.this, MainActivity.class);
-                startActivity(splash);
-                finish();
-            }
-        },SPLASH_TIME_OUT);
+        auth = FirebaseAuth.getInstance();
+        if(auth.getCurrentUser() != null){
+            startActivity(new Intent(SplashScreen.this, HomePage.class));
+            finish();
+        }
+        else{
+            //displays splash screen for 2.5 seconds upon app opening
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent splash = new Intent(SplashScreen.this, MainActivity.class);
+                    startActivity(splash);
+                    finish();
+                }
+            },SPLASH_TIME_OUT);
+        }
     }
 
 
