@@ -164,6 +164,9 @@ public class AddContact extends AppCompatActivity{
 
         handler = new Handler(getApplicationContext());
 
+        //for presentation purposes, adds a couple fake contatcs to list
+        addTestContacts();
+
 
         //checking to make sure user gave permission to use phones location
         //required even though permission is checked on main page
@@ -535,7 +538,59 @@ public class AddContact extends AppCompatActivity{
         }catch (ActivityNotFoundException err){
 
         }
+    }
 
+    //adds temporary contacts to contact list for purpose of presentation
+    private void addTestContacts(){
+        String name = "";
+        String number = "";
+        String date = "";
+        String location = "";
+
+        for(int i = 1; i < 6; i++){
+            switch(i){
+                case 1:
+                    name = "Adam";
+                    number = "1111111111";
+                    location = "Rydal, Georgia";
+                    date = CalendarDay.from(2018,10,2).toString();
+                    break;
+                case 2:
+                    name = "Jacques";
+                    number = "2222222222";
+                    location = "Marietta, Georgia";
+                    date = CalendarDay.from(2018,10,6).toString();
+                    break;
+                case 3:
+                    name = "Chris";
+                    number = "3333333333";
+                    location = "Atlanta, Georgia";
+                    date = CalendarDay.from(2018,10,19).toString();
+                    break;
+                case 4:
+                    name = "Shane";
+                    number = "4444444444";
+                    location = "Cartersville, Georgia";
+                    date = CalendarDay.from(2018,10,20).toString();
+                    break;
+                case 5:
+                    name = "Jordan";
+                    number = "5555555555";
+                    location = "Smyrna, Georgia";
+                    date = CalendarDay.from(2018,10,25).toString();
+                    break;
+            }
+
+            ContactInformation contactInformation = new ContactInformation();
+            contactInformation.setName(name);
+            contactInformation.setNumber(number);
+            contactInformation.setDate(date);
+            contactInformation.setLocation(location);
+            Boolean added = handler.addContact(contactInformation);
+        }
+        Intent myIntent = new Intent(AddContact.this, Contact_ListView.class);
+        startActivity(myIntent);
+        finish();
     }
 
 

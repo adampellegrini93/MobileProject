@@ -66,6 +66,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private Shake shake;
+    private Toast t;
     RideRequestButton rideRequestButton;
 
     @Override
@@ -161,7 +162,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
 
         //handles the calendar
         calendar = (MaterialCalendarView) findViewById(R.id.calendarView);
-        //calendar.addDecorator(new CurrentDateDecorator(this));
+        calendar.addDecorator(new CurrentDateDecorator(this));
         final NewContactDateDecorator decorator = new NewContactDateDecorator(this);
         calendar.addDecorator(decorator);
         calendar.setOnDateChangedListener(new OnDateSelectedListener() {
@@ -171,7 +172,11 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener{
                     String Date = calendarDay.toString().substring(12,calendarDay.toString().length()-1);
                     int month = Integer.parseInt(Date.substring(5,7)) + 1;
                     String displayDate = Date.substring(0,5) + month + Date.substring(7,Date.length());
-                    Toast.makeText(getBaseContext(), "Met "+ decorator.getNames(calendarDay)+" on: " + displayDate, Toast.LENGTH_SHORT).show();
+                    if(t != null){
+                        t.cancel();
+                    }
+                    t = Toast.makeText(getBaseContext(), "Met "+ decorator.getNames(calendarDay)+" on: " + displayDate, Toast.LENGTH_SHORT);
+                    t.show();
                 }
             }
         });

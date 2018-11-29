@@ -113,8 +113,8 @@ public class Contact_ListView extends AppCompatActivity {
                             startActivity(myIntent);
                         }
                         else if(options[which].matches("Delete")){
-                            if(handler.delete(contacts.get(position).getIdentifier())
-                                    && deleteContact(getApplicationContext(),contacts.get(position).getNumber(),contacts.get(position).getName())){
+                            if(handler.delete(contacts.get(position).getIdentifier())){
+                                deleteContact(getApplicationContext(),contacts.get(position).getNumber(),contacts.get(position).getName());
                                 loadList();
                             }
                         }

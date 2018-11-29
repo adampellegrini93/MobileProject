@@ -94,8 +94,8 @@ public class EditContact extends AppCompatActivity {
                 edit();
                 break;
             case 2:
-                if(handler.delete(extras.getInt("id"))
-                        && deleteContact(getApplicationContext(),extras.getString("number"),extras.getString("name"))){
+                if(handler.delete(extras.getInt("id"))){
+                    deleteContact(getApplicationContext(),extras.getString("number"),extras.getString("name"));
                     Intent myIntent = new Intent(EditContact.this,Contact_ListView.class);
                     startActivity(myIntent);
                 }

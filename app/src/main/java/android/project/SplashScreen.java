@@ -18,6 +18,7 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         auth = FirebaseAuth.getInstance();
+        //if user never logged out go straight to homepage
         if(auth.getCurrentUser() != null){
             startActivity(new Intent(SplashScreen.this, HomePage.class));
             finish();
